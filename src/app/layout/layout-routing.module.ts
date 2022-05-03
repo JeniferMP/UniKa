@@ -9,6 +9,7 @@ const routes: Routes = [
     component:LayoutComponent,
     children:[
       {path:'dashboard',component:DahsboardComponent}
+      
     ]
   }
 ];

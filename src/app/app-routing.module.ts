@@ -5,6 +5,8 @@ import {AuthRoutingModule} from './auth/auth-routing.module';
 
 const routes: Routes = [
 
+  {path: '',loadChildren: ()=> import('./auth/auth.module').then( m=>m.AuthModule )   },
+  {path: 'layout',loadChildren: ()=> import('./layout/layout.module').then( m=>m.LayoutModule )   },
   {path:'',redirectTo:'',pathMatch:'full'},
   {path:'**',redirectTo:'/not-found'},
   //{path:'not-found',component:NotfoundComponent}
@@ -12,8 +14,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
-    AuthRoutingModule],   
+    RouterModule.forRoot(routes)],   
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

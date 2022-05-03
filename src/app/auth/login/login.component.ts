@@ -7,32 +7,36 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
+  templateUrl:'./login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent  {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup = this.fb.group({
-    username:    ['', [ Validators.required]],
-    password: ['', [ Validators.required]],
+    username:['', [ Validators.required]],
+    password: ['', [ Validators.required]]
   });
 
   constructor( 
     private fb: FormBuilder,
     private router: Router, 
-    private authService: AuthService,
+    private authService: AuthService
   ) { 
     localStorage.clear();
+  }
+  ngOnInit(): void {
+    this.loginForm.reset();
   }
 
 
   public login():void {
+    console.log(this.loginForm.value);
     const { username, password } = this.loginForm.value;
     this.authService.login( username, password)
     .subscribe(
       {
         next: (respuesta:any) => {
           console.log(respuesta);
-            //this.router.navigateByUrl('/layout');
+          this.router.navigateByUrl('/layout');
           
         },
         error: (respuestaError:HttpErrorResponse) => {
