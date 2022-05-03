@@ -1,0 +1,117 @@
+.formulario{
+    margin-top: 4.5rem;
+    
+}
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+.container-login100 {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  
+  background-size: cover;
+  background-position: center;
+}
+
+.wrap-login100 {
+  width: 960px;
+  height: 600px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+@media (max-width: 992px) {
+  .wrap-login100 {
+	padding: 75px 90px 33px 85px;
+  }
+  .formulario{
+    margin-top: 0;
+  }
+  .alert-loading{
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrap-login100 {
+	padding: 100px 80px 33px 80px;
+  }
+  .formulario{
+    margin-top: 0;
+}
+}
+
+.usuario{
+  margin-top: 2rem;
+}
+.boton{
+  background-color: #c29e5b;
+}
+
+@media (max-width: 576px) {
+  .wrap-login100 {
+	padding: 70px 15px 33px 15px;
+  }
+  .formulario{
+    margin-top: 0;
+  }
+}
+
+
+@media (max-width: 320px) {
+    .formulario{
+        margin-top: 0;
+        overflow-x: scroll;
+    }
+}
+
+.alert-loading{
+  width: 100%;
+}
+
+.bg-gradient-primary {
+  background-color: #579d7f;
+  background-image: linear-gradient(180deg, #579d7f 10%, #579d7f 100%);
+  background-size: cover;
+}
+.justify-content-center {
+  justify-content: center !important;
+}
+.text-center {
+  text-align: center !important;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #6e707e;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #d1d3e2;
+  border-radius: 0.35rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
