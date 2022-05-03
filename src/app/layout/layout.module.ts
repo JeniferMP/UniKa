@@ -20,9 +20,11 @@ import { FormsModule } from '@angular/forms';
     LayoutRoutingModule,
     SharedModule,
     FormsModule
+
   ],exports:[
     SharedModule,
-    DahsboardComponent
+    DahsboardComponent,
+    LayoutComponent,
   ],
 })
 export class LayoutModule { }
