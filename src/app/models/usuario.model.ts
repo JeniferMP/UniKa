@@ -1,5 +1,5 @@
 export class Usuario{
-    USU_ID:number ;
+    USU_ID:number  ;
     USU_USUARIO:string ;
     USU_CONTRASENIA :string;
     USU_NOMBRES :string;
