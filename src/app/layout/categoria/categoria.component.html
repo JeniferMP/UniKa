@@ -1,0 +1,85 @@
+
+<div class="row justify-content-center">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800 col-12 text-center">Categorías de productos</h1>
+    <br><br>
+
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-header py-3 row justify-content-around">
+                <div class="py-1 col-sm-12 col-md-7 col-lg-7">
+                    <div class="row">
+                        <div class="col-9 col-lg-7">
+                            <input type="text" class="border-left-primary font-tamanio form-control" name="filtroTexto" placeholder="Buscar..." [(ngModel)]="filtroTexto">
+                        </div>
+                        <div class="col-3 col-lg-2  py-1">
+                            <button (click)="filtrarCategoria()" [disabled]="carga" style="float:right" style="width: 100%;" type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-1 col-12 col-md-4 col-lg-3 ">
+                    <button [disabled]="carga"  (click)="abrirCrearCategoria()" type="button" class="btn btn-primary">Crear Categoría</button>
+                </div>
+                
+            </div>
+            <div class="card-body">
+                <div  *ngIf="categorias.length<=0; else categoriaModule">
+                    <h3>No hay categorías registradas.</h3>
+                </div>
+                <!---------------PAGINACIÓN------------->
+                <div *ngIf="categorias?.length>0" class="row box-footer clearfix mt-3">     
+                    <div class="col-xl-9 col-lg-8 col-md-7 col-sm-7 col-xs-6 col-6">
+                        <ngb-pagination *ngIf="categorias?.length>5" class="d-flex justify-content-start" size="sm" [maxSize]="5" [pageSize]="itemsPerPage"  [collectionSize]="categorias?.length" [(page)]="currentPage"></ngb-pagination>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-xs-6 col-6">
+                        <select class="pull-right" [(ngModel)]="itemsPerPage" class="form-control form-control-sm custom-select">
+                            <option value="5">5 elementos</option>
+                            <option value="10">10 elementos</option>
+                            <option value="15">15 elementos</option>
+                            <option value="20">20 elementos</option>                    
+                            <option value="50">50 elementos</option>                    
+                            <option value="100">100 elementos</option>                    
+                        </select>  
+                    </div>    
+                </div>
+
+                <ng-template #categoriaModule>
+                    <div class="table-responsive"> 
+                        <table class="table table-bordered table-striped verticle-middle">
+                            <thead>
+                                <tr>
+                                    <th scope="col" sortable="CAT_ID" (sort)="onSort($event)">Código</th>
+                                    <th scope="col" sortable="CAT_NOMBRE" (sort)="onSort($event)">Nombre</th>
+                                    <th scope="col" sortable="CAT_ESTADO" (sort)="onSort($event)">Estado</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let cat of categorias | filterCategoryByName:filtroTexto | slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  ">
+                                    
+                                    <td >{{cat.CAT_ID}}</td>
+                                    <td >{{cat.CAT_NOMBRE}}</td>
+                                    <td >{{cat.IDTIPO_CLIENTE}}</td>
+                                    <td class="color-row-table">
+                                        <div class="row btnes">
+                                            
+                                            <div class="col-1 button-table btn-edit">
+                                                <button [disabled]="carga" (click)="abrirEditarCategoria(cat)" class="btn btn-warning btn-circle btn-sm" ngbTooltip="Editar" >
+                                                    <i style="color: white;" class="far fa-edit" aria-hidden="true"   ></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                    
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
