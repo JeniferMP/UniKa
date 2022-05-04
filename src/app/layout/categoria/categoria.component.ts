@@ -2,7 +2,9 @@ import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } fro
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Categoria } from 'src/app/models/categoria.model';
+import { TipoCliente } from 'src/app/models/tipo-cliente.model';
 import { CategoriaService } from 'src/app/services/categoria.service';
+import { TipoClienteService } from 'src/app/services/tipo-cliente.service';
 import { compare, SorteableDirective } from 'src/app/shared/directives/sorteable.directive';
 
 @Component({
@@ -12,9 +14,11 @@ import { compare, SorteableDirective } from 'src/app/shared/directives/sorteable
 })
 export class CategoriaComponent implements OnInit {
 
+  tipoClientes: TipoCliente[]=[];
   categorias: Categoria[] = [];
   categorias_iniciales: any;
    constructor(private categoriaService:CategoriaService,
+                private tipoClienteService: TipoClienteService,
                 private formBuilder: FormBuilder,
                 public modal: NgbModal,
                 configModal: NgbModalConfig) 
@@ -53,6 +57,31 @@ export class CategoriaComponent implements OnInit {
     });
   }
 
+  listarTiposCliente(){
+    this.carga = false;
+    this.modalIn = true;
+    this.tipoClienteService.listarTiposClientes().subscribe(
+      (data)=>{
+        this.tipoClientes = data['resultado'];
+        this.carga = false;
+        this.modalIn = true;
+      },
+      (error) =>{
+        this.carga = false;
+        this.mostrarAlerta = true;
+        this.tipoAlerta='danger';
+        this.modalIn = true;
+        if (error['error']['error'] !== undefined) {
+          if (error['error']['error'] === 'error_deBD') {
+            this.mensajeAlerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página.';
+          }
+        }
+        else{
+          this.mensajeAlerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página.';
+        }
+      }
+    );
+  }
   /*insertarCategoria(){
     this.cargaModal = true;
     this.modalIn = true;

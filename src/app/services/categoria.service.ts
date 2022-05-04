@@ -22,7 +22,7 @@ export class CategoriaService {
   } 
 
   listarCategoria() : Observable<any>{
-    const url = environment.domain_url + '/api/categoria/listarCategorias';
+    const url = environment.domain_url + '/api/categoria/listarCategoria';
     return this.http.get<any>(url).pipe( retry(2) );
   }
 

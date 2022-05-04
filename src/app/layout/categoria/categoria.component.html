@@ -28,9 +28,9 @@
                     <h3>No hay categorías registradas.</h3>
                 </div>
                 <!---------------PAGINACIÓN------------->
-                <div *ngIf="categorias?.length>0" class="row box-footer clearfix mt-3">     
+                <div *ngIf="categorias.length>0" class="row box-footer clearfix mt-3">     
                     <div class="col-xl-9 col-lg-8 col-md-7 col-sm-7 col-xs-6 col-6">
-                        <ngb-pagination *ngIf="categorias?.length>5" class="d-flex justify-content-start" size="sm" [maxSize]="5" [pageSize]="itemsPerPage"  [collectionSize]="categorias?.length" [(page)]="currentPage"></ngb-pagination>
+                        <ngb-pagination *ngIf="categorias.length>5" class="d-flex justify-content-start" size="sm" [maxSize]="5" [pageSize]="itemsPerPage"  [collectionSize]="categorias.length" [(page)]="currentPage"></ngb-pagination>
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-xs-6 col-6">
                         <select class="pull-right" [(ngModel)]="itemsPerPage" class="form-control form-control-sm custom-select">
@@ -51,16 +51,16 @@
                                 <tr>
                                     <th scope="col" sortable="CAT_ID" (sort)="onSort($event)">Código</th>
                                     <th scope="col" sortable="CAT_NOMBRE" (sort)="onSort($event)">Nombre</th>
-                                    <th scope="col" sortable="CAT_ESTADO" (sort)="onSort($event)">Estado</th>
+                                    <th scope="col" sortable="NOMBRE_TIPO_CLIENTE" (sort)="onSort($event)">Cliente</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let cat of categorias | filterCategoryByName:filtroTexto | slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  ">
+                                <tr *ngFor="let cat of categorias |  slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  ">
                                     
                                     <td >{{cat.CAT_ID}}</td>
                                     <td >{{cat.CAT_NOMBRE}}</td>
-                                    <td >{{cat.IDTIPO_CLIENTE}}</td>
+                                    <td >{{cat.NOMBRE_TIPO_CLIENTE}}</td>
                                     <td class="color-row-table">
                                         <div class="row btnes">
                                             
