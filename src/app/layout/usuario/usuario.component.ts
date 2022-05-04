@@ -10,7 +10,6 @@ import { compare, SorteableDirective } from 'src/app/shared/directives/sorteable
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 
-
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
@@ -124,7 +123,7 @@ export class UsuarioComponent implements OnInit {
     return this.userForm.get('rol');
   }
   get sexo_(){
-    return this.userForm.get('sexo_');
+    return this.userForm.get('sexo');
   }
   obtenerSexo(sexo: string) {
     this.sexo = sexo;

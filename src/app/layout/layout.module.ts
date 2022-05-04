@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+//import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar'
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { UsuarioComponent } from './usuario/usuario.component';
@@ -19,7 +19,7 @@ import { PrendaComponent } from './prenda/prenda.component';
     DahsboardComponent,
     CategoriaComponent,
     PrendaComponent
-    
+  
   ],
   imports: [
     CommonModule,
@@ -28,6 +28,8 @@ import { PrendaComponent } from './prenda/prenda.component';
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
+    //MatProgressBarModule
+    
   ],exports:[
     SharedModule,
     DahsboardComponent,

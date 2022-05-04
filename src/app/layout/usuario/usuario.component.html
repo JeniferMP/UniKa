@@ -15,15 +15,14 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="py-1 col-sm-12 col-md-4 col-lg-3" >
+            <div class="py-1 col-sm-12 col-md-4 col-lg-3" >
                 <button  (click)="registerUserModal()" style="float:right" type="button" class="boton btn btn-primary ">Nuevo usuario</button>
-            </div> -->
+            </div>
         </div>
         <div class="card-body text-gray-400 ">
             <div  *ngIf="usuarios.length<=0; else userModule">
                 <h3>No hay usuarios registrados.</h3>
             </div>
-           
             <div *ngIf="usuarios.length>0" class="row box-footer clearfix mt-3">     
                 <div class="col-xl-10 col-lg-9 col-md-7 col-sm-7 col-6">
                 <ngb-pagination *ngIf="usuarios.length>5" class="d-flex justify-content-start" size="sm" [maxSize]="5" [pageSize]="itemsPerPage"  [collectionSize]="usuarios.length" [(page)]="currentPage"></ngb-pagination>
@@ -61,26 +60,26 @@
                                 <td *ngIf="usuario.USU_ID != USU_ID && usuario.USU_ID != 1 && usuario.USU_ID != 2"  class="color-row-table" >
                                     <div class="row btnes">
                                         <div class="col-1 button-table"  *ngIf="usuario.USU_ESTADO != 1 && usuario.USU_ESTADO !=2; else Habilitar">
-                                             <!-- <span (click)="habilitarInhabilitarUsuario(user.USU_ID,user.USU_ESTADO)" class="btn btn-success btn-circle btn-sm " ngbTooltip="Habilitar">
+                                            <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)" class="btn btn-success btn-circle btn-sm " ngbTooltip="Habilitar">
                                                 <i class="fas fa-check" aria-hidden="true"></i>
-                                            </span> -->
+                                            </span>
                                         </div>
                                         <ng-template #Habilitar>
                                             <div class="col-1 button-table">
-                                                <!-- <span (click)="habilitarInhabilitarUsuario(user.USU_ID,user.USU_ESTADO)"  class="btn btn-danger btn-circle btn-sm "ngbTooltip="Deshabilitar">
+                                                <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)"  class="btn btn-danger btn-circle btn-sm "ngbTooltip="Deshabilitar">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
-                                                </span> -->
+                                                </span>
                                             </div>
                                         </ng-template>
                                         <div class="col-1 button-table">
-                                            <!-- <span   (click)="seeMore(user)" class="btn btn-primary btn-circle btn-sm" ngbTooltip="Ver Más" >
+                                            <span   (click)="seeMore(usuario)" class="btn btn-primary btn-circle btn-sm" ngbTooltip="Ver Más" >
                                                 <i class="fas fa-eye" aria-hidden="true"   ></i>
-                                            </span> -->
+                                            </span>
                                         </div>
                                         <div class="col-1 button-table btn-edit">
-                                            <!-- <span (click)="editUser(user)" class="btn btn-warning btn-circle btn-sm" ngbTooltip="Editar" >
+                                            <span (click)="editUser(usuario)" class="btn btn-warning btn-circle btn-sm" ngbTooltip="Editar" >
                                                 <i style="color: white;" class="far fa-edit" aria-hidden="true"   ></i>
-                                            </span> -->
+                                            </span>
                                         </div>
                                     </div>
                                 </td>
@@ -94,10 +93,237 @@
             
         </div>
     </div>
-
 </div> 
 
-
+<ng-template #editUserModal let-d="dismiss">
+    <div class="modal-header justify-content-center">
+        <h4 class="modal-title">Actualizar Usuario</h4>
+    </div>
+    <!-- <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar> -->
+    <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
+    <div class="modal-body">
+        <form [formGroup]="userForm">
+            <div class="form-group">
+                    <div class="row justify-content-center">
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputNombres">Nombres</label>
+                            <div>
+                                <input type="text" formControlName="nombres" id="inputNombres" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Nombre(s)">
+                                <!-- <div *ngIf="nombres!.invalid && (nombres!.dirty || nombres!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                    <div *ngIf="nombres!.errors.required">
+                                    * El nombre de usuario es requerido.
+                                    </div>
+                                    <div *ngIf="nombres!.errors.maxlength">
+                                    * Se requieren máximo 60 caracteres.
+                                    </div>
+                                    <div *ngIf="nombres!.errors.pattern">
+                                    * El formato es inválido.
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputSexo" data-toggle="tooltip" data-placement="top" title="*Obligatorio">Sexo: <small class="text-danger" data-toggle="tooltip" data-placement="top" title="*Obligatorio">(*)</small></label>
+                            <select  formControlName="sexo_" id="inputSexo" class="border-left-primary form-select">
+                                <option hidden value="" disabled>Selecciona una opción</option>
+                                <option [value]="1" >MASCULINO</option>
+                                <option [value]="0" >FEMENINO</option>
+                            </select>
+                            <!-- <div *ngIf="sexo.invalid && (sexo.dirty || sexo.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="sexo_.errors.required">
+                                    * El tipo de sexo es requerido.
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputApellidoPaterno">Apellido Paterno</label>
+                            <div>
+                                <input type="text" formControlName="apellido_paterno" id="inputApellidoPaterno" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Primer Apellido">
+                                <div *ngIf="apellido_paterno!.invalid && (apellido_paterno!.dirty || apellido_paterno!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                    <!-- <div *ngIf="apellido_paterno.errors.required">
+                                    * El apellido paterno es requerido.
+                                    </div>
+                                    <div *ngIf="apellido_paterno.errors.maxlength">
+                                    * Se requieren máximo 30 caracteres.
+                                    </div>
+                                    <div *ngIf="apellido_paterno.errors.pattern">
+                                    * El formato es inválido.
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputApeliidoMaterno">Apellido Materno</label>
+                            <div>
+                                <input type="text" formControlName="apellido_materno" id="inputApeliidoMaterno" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Segundo Apellido">
+                                <div *ngIf="apellido_materno!.invalid && (apellido_materno!.dirty || apellido_materno!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                    <!-- <div *ngIf="apellido_materno.errors.required">
+                                    * El apellido materno es requerido.
+                                    </div>
+                                    <div *ngIf="apellido_materno.errors.maxlength">
+                                    * Se requieren máximo 30 caracteres.
+                                    </div>
+                                    <div *ngIf="apellido_materno.errors.pattern">
+                                    * El formato es inválido.
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputUser" >Usuario</label>
+                            <div>
+                                <input type="text" id="inputUser" formControlName="user" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Alias de usuario">
+                                <div *ngIf="user!.invalid && (user!.dirty || user!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                    <!-- <div *ngIf="user.errors.required">
+                                    * El alias de usuario es requerido.
+                                    </div>
+                                    <div *ngIf="user.errors.maxlength">
+                                    * Se requieren máximo 60 caracteres.
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputContraseña">Contraseña:</label>
+                            <div class="p-0 col-sm-8 col-md-12 col-lg-12 d-flex">
+                                <input id="inputContraseña" type={{PASSWORD_CURRENT_TYPE}} id="inputContrasenia" formControlName="contrasena" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Contraseña">
+                                <button style="border-style:none" (click)="cambiarVistaContrasena()">
+                                    <i  class={{PASSWORD_CURRENT_ICON}} aria-hidden="true" ></i>
+                                </button>
+                            </div>
+                            <div *ngIf="contrasena!.invalid && (contrasena!.dirty || contrasena!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <!-- <div *ngIf="contrasena.errors.maxlength">
+                                * Se requieren máximo 20 caracteres.
+                                </div>
+                                <div *ngIf="contrasena.errors.minlength">
+                                * Se requieren mínimo 8 caracteres.
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputEmail">Correo electrónico</label>
+                            <div>
+                                <input type="email" formControlName="email" id="inputEmail" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Email">
+                                <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                    <!-- <div *ngIf="email.errors.required">
+                                    * El email es requerido.
+                                    </div>
+                                    <div *ngIf="email.errors.maxlength">
+                                    * Se requieren máximo 60 caracteres.
+                                    </div>
+                                    <div *ngIf="email.errors.pattern">
+                                    * El formato es inválido.
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputCelular">Celular</label>
+                            <div>
+                                <input type="text" formControlName="celular" id="inputCelular" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Celular">
+                                <div *ngIf="celular!.invalid && (celular!.dirty || celular!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                    <!-- <div *ngIf="celular.errors.required">
+                                    * El celular es requerido.
+                                    </div>
+                                    <div *ngIf="celular.errors.maxlength">
+                                    * Se requieren máximo 9 caracteres.
+                                    </div>
+                                    <div *ngIf="celular.errors.minlength">
+                                    * Se requieren mínimo 9 caracteres.
+                                    </div>
+                                    <div *ngIf="celular.errors.pattern">
+                                        * El formato es inválido.
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label style="padding-left:0.5rem">Fecha de Nacimiento</label>
+                            <input  [max]="getTodayFechaNacimiento()" [ngClass]="{'textoGris': opacarDateFechaNacimiento }" 
+                                (change)="cambiarDeStyleDate()" formControlName="fecha_nacimiento" type="date" id="fechaInput" name="fechaInput" class="border-left-primary  form-control" >
+                            <div *ngIf="fecha_nacimiento!.invalid && (fecha_nacimiento!.dirty || fecha_nacimiento!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <!-- <div *ngIf="fecha_nacimiento.errors.required">
+                                * La fecha es requerida.
+                                </div> -->
+                            </div>
+                            
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputdni">DNI</label>
+                            <div>
+                                <input type="text" formControlName="dni" id="inputdni" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Documento de Identidad">
+                                <div *ngIf="dni!.invalid && (dni!.dirty || dni!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                    <!-- <div *ngIf="dni.errors.required">
+                                    * El DNI es requerido.
+                                    </div>
+                                    <div *ngIf="dni.errors.maxlength">
+                                    * Se requieren máximo 8 caracteres.
+                                    </div>
+                                    <div *ngIf="dni.errors.minlength">
+                                    * Se requieren mínimo 8 caracteres.
+                                    </div>
+                                    <div *ngIf="dni.errors.pattern">
+                                    * El formato es inválido.
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputDireccion">Dirección</label>
+                            <div>
+                                <input type="text" formControlName="direccion" id="inputDireccion" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Dirección">
+                                <div *ngIf="direccion!.invalid && (direccion!.dirty || direccion!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                    <!-- <div *ngIf="direccion.errors.required">
+                                    * El direccion es requerido.
+                                    </div>
+                                    <div *ngIf="direccion.errors.maxlength">
+                                    * Se requieren máximo 100 caracteres.
+                                    </div>
+                                    <div *ngIf="direccion.errors.pattern">
+                                    * El formato es inválido.
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label class="mr-sm-2" for="inputRol">Rol</label>
+                            <select  formControlName="rol" id="inputRol" class="border-left-primary form-select mr-sm-2" >
+                                <option hidden value="" disabled>Escoge una opción</option>
+                                <option [value]="rol.ROL_ID" *ngFor="let rol of roles">{{rol.ROL_NOMBRE}}</option>
+                            </select>
+                            <div *ngIf="rol!.invalid && (rol!.dirty || rol!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <!-- <div *ngIf="rol.errors.required">
+                                    * El rol es requerido.
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </form>
+        <div class="row d-flex text-center justify-content-center">
+            <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
+                <button  (click)="updateUser();" [disabled]="userForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
+                    <span class="text">Actualizar&nbsp;<i class="fas fa-save"></i></span>
+                </button>
+            </div>
+            <div class="my-2 col-sm-12 col-md-12 col-lg-3">
+                <button [disabled]="cargando" (click)="d('Cross click')" class="btn btn-warning btn-icon-split">
+                    <span class="text">Cancelar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
 
 
 
