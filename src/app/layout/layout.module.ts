@@ -18,7 +18,7 @@ import { PrendaComponent } from './prenda/prenda.component';
     UsuarioComponent,
     DahsboardComponent,
     CategoriaComponent,
-    PrendaComponent
+    PrendaComponent,
   
   ],
   imports: [
@@ -28,7 +28,7 @@ import { PrendaComponent } from './prenda/prenda.component';
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-    //MatProgressBarModule
+    
     
   ],exports:[
     SharedModule,

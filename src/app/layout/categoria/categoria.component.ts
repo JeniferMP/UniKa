@@ -53,8 +53,17 @@ export class CategoriaComponent implements OnInit {
 
   inicializarFormulario(){
     this.categoriaForm = this.formBuilder.group({
-      nombreCategoria:['',[Validators.required, Validators.maxLength(60)]]
+      nombreCategoria:['',[Validators.required, Validators.maxLength(60)]],
+      tipoCliente : ['',[Validators.required]],
     });
+  }
+
+  get tipoCliente(){
+    return this.categoriaForm.get('tipoCliente');
+  }
+
+  get nombreCategoria() {
+    return this.categoriaForm.get('nombreCategoria');
   }
 
   listarTiposCliente(){
@@ -82,16 +91,16 @@ export class CategoriaComponent implements OnInit {
       }
     );
   }
-  /*insertarCategoria(){
+  insertarCategoria(){
     this.cargaModal = true;
     this.modalIn = true;
     this.mostrarAlerta = false; 
-    this.categoriaService.crearCategoria(this.nombreCategoria.value).subscribe(data => {
+    this.categoriaService.crearCategoria(this.nombreCategoria?.value).subscribe(data => {
       
       this.categoriaForm.reset();
       this.cargaModal = false;
       this.modal.dismissAll();  
-      this.listarCategorias(); 
+      this.listarCategorias();
       this.tipoAlerta = 'success';
       this.mostrarAlerta = true; 
       this.mensajeAlerta = 'Se ha creado la categoría satisfactoriamente.';
@@ -114,7 +123,7 @@ export class CategoriaComponent implements OnInit {
     }
     );
 
-  }*/
+  }
 
   
   listarCategorias(){
@@ -141,10 +150,6 @@ export class CategoriaComponent implements OnInit {
       }
     }
     );
-  }
-
-  get nombreCategoria() {
-    return this.categoriaForm.get('nombreCategoria');
   }
 
   closeModal(): any {
