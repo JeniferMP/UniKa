@@ -4,6 +4,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
+import {PipesModule} from './pipes/pipes.module'
 
 
 @NgModule({
@@ -14,12 +15,14 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    PipesModule
   ], 
   exports:[
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    PipesModule
   ]
 })
 export class SharedModule { }
