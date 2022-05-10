@@ -27,6 +27,8 @@ export class CategoriaComponent implements OnInit {
                   configModal.keyboard = false;
                   configModal.size = 'md'
                 }
+
+  //vARIABLE DE CARGA Y ERROR
   carga = false; 
   modalIn = false; 
   cargaModal = false; 
@@ -48,6 +50,7 @@ export class CategoriaComponent implements OnInit {
   ngOnInit(): void {
     this.carga = true;
     this.listarCategorias();
+    this.listarTiposCliente();
     this.filtroTexto = '';
   }
 
@@ -182,6 +185,8 @@ export class CategoriaComponent implements OnInit {
     }
   }
 
+
+  /*****************Tablas**********/
   @ViewChildren(SorteableDirective) headers: QueryList<SorteableDirective>;
 
   onSort({column, direction}: any) {
