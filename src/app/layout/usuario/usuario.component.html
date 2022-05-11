@@ -165,7 +165,7 @@
                 <div class="row justify-content-center">
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
                         <label style="padding-left:0.5rem">Fecha de Nacimiento</label>
-                        <input  [max]="getTodayFechaNacimiento()" [ngClass]="{'textoGris': opacarDateFechaNacimiento }" 
+                        <input  [ngClass]="{'textoGris': opacarDateFechaNacimiento }" 
                             (change)="cambiarDeStyleDate()" formControlName="fecha_nacimiento" type="date" id="fechaInput" name="fechaInput" class="border-left-primary  form-control" >
                         
                     </div>
@@ -190,6 +190,7 @@
                         <select  formControlName="rol" id="inputRol" class="border-left-primary form-select mr-sm-2" >
                             <option hidden value="" disabled>Escoge una opción</option>
                             <option [value]="rol.ROL_ID" *ngFor="let rol of roles">{{rol.ROL_NOMBRE}}</option>
+
                         </select>                        
                     </div>
                 </div>
@@ -318,132 +319,10 @@
     </div>
 </ng-template>
 
-<ng-template #editUserModal let-d="dismiss">
-    <div class="modal-header justify-content-center">
-        <h4 class="modal-title">Actualizar Usuario</h4>
-    </div>
-    <div class="modal-body">
-        <form [formGroup]="userForm">
-            <div class="form-group">
-                    <div class="row justify-content-center">
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputNombres">Nombres</label>
-                            <div>
-                                <input type="text" formControlName="nombres" id="inputNombres" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Nombre(s)">
-                                
-                            </div>
-                        </div>
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputSexo" data-toggle="tooltip" data-placement="top" title="*Obligatorio">Sexo: <small class="text-danger" data-toggle="tooltip" data-placement="top" title="*Obligatorio">(*)</small></label>
-                            <select  formControlName="sexo_" id="inputSexo" class="border-left-primary form-select">
-                                <option hidden value="" disabled>Selecciona una opción</option>
-                                <option [value]="1" >MASCULINO</option>
-                                <option [value]="0" >FEMENINO</option>
-                            </select>
-                        
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputApellidoPaterno">Apellido Paterno</label>
-                            <div>
-                                <input type="text" formControlName="apellido_paterno" id="inputApellidoPaterno" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Primer Apellido">
-                                
-                            </div>
-                        </div>
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputApeliidoMaterno">Apellido Materno</label>
-                            <div>
-                                <input type="text" formControlName="apellido_materno" id="inputApeliidoMaterno" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Segundo Apellido">
-                            
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputUser" >Usuario</label>
-                            <div>
-                                <input type="text" id="inputUser" formControlName="user" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Alias de usuario">
-                                
-                            </div>
-                        </div>
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputContraseña">Contraseña:</label>
-                            <div class="p-0 col-sm-8 col-md-12 col-lg-12 d-flex">
-                                <input id="inputContraseña" type={{PASSWORD_CURRENT_TYPE}} id="inputContrasenia" formControlName="contrasena" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Contraseña">
-                                <button style="border-style:none" (click)="cambiarVistaContrasena()">
-                                    <i  class={{PASSWORD_CURRENT_ICON}} aria-hidden="true" ></i>
-                                </button>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputEmail">Correo electrónico</label>
-                            <div>
-                                <input type="email" formControlName="email" id="inputEmail" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Email">
-                                
-                            </div>
-                        </div>
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputCelular">Celular</label>
-                            <div>
-                                <input type="text" formControlName="celular" id="inputCelular" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Celular">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label style="padding-left:0.5rem">Fecha de Nacimiento</label>
-                            <input  [max]="getTodayFechaNacimiento()" [ngClass]="{'textoGris': opacarDateFechaNacimiento }" 
-                                (change)="cambiarDeStyleDate()" formControlName="fecha_nacimiento" type="date" id="fechaInput" name="fechaInput" class="border-left-primary  form-control" >
-                            
-                            
-                        </div>
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputdni">DNI</label>
-                            <div>
-                                <input type="text" formControlName="dni" id="inputdni" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Documento de Identidad">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputDireccion">Dirección</label>
-                            <div>
-                                <input type="text" formControlName="direccion" id="inputDireccion" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Dirección">
-                                
-                            </div>
-                        </div>
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label class="mr-sm-2" for="inputRol">Rol</label>
-                            <select  formControlName="rol" id="inputRol" class="border-left-primary form-select mr-sm-2" >
-                                <option hidden value="" disabled>Escoge una opción</option>
-                                <option [value]="rol.ROL_ID" *ngFor="let rol of roles">{{rol.ROL_NOMBRE}}</option>
-                            </select>
-                            
-                        </div>
-                    </div>
-            </div>
-        </form>
-        <div class="row d-flex text-center justify-content-center">
-            <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
-                <button  (click)="updateUser();" [disabled]="userForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
-                    <span class="text">Actualizar&nbsp;<i class="fas fa-save"></i></span>
-                </button>
-            </div>
-            <div class="my-2 col-sm-12 col-md-12 col-lg-3">
-                <button [disabled]="cargando" (click)="d('Cross click')" class="btn btn-warning btn-icon-split">
-                    <span class="text">Cancelar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
-                </button>
-            </div>
-        </div>
-    </div>
-</ng-template>
-
+<modal-editar-usuario
+[idUsuario]="IdUsuario"
+>
+</modal-editar-usuario>
 <!-- <body>
     <div class="col-lg-6">
         <div class="card">

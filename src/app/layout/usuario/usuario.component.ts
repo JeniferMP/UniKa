@@ -20,11 +20,26 @@ export class UsuarioComponent implements OnInit {
   usuarios: Usuario []=[];
   usuariosObtenidos: any[]=[];
   roles: Rol []= [];
-  userForm: FormGroup;
   sexo: any;
   opacarDateFechaNacimiento: boolean = true;
   USU_ID: any;
   datePipe: any;
+  IdUsuario : number = 0;
+
+  userForm : FormGroup = this.formBuilder.group({
+    user:['',[Validators.required, Validators.maxLength(60)]],
+    email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/), Validators.maxLength(60)]],
+    contrasena: ['', [Validators.minLength(8), Validators.maxLength(20)]],
+    nombres: ['', [Validators.required, Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(50)]],
+    apellido_paterno: ['', [Validators.required, Validators.pattern('^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$'), Validators.maxLength(30)]],
+    apellido_materno: ['', [Validators.required, Validators.pattern('^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$'), Validators.maxLength(30)]],
+    fecha_nacimiento: ['', [Validators.required ]],
+    celular: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(9), Validators.minLength(9)]] ,
+    dni: ['', [Validators.required, Validators.pattern(/^([0-9])*$/), Validators.minLength(8),  Validators.maxLength(8)]],
+    direccion: ['', [Validators.required , Validators.pattern('^[a-zñáéíóú#°/,. A-ZÑÁÉÍÓÚ  0-9]+$'), Validators.maxLength(100)]],
+    rol:['',[Validators.required]],
+    sexo:['']
+  });
 
   constructor(private formBuilder: FormBuilder,
     public modal: NgbModal,
@@ -64,27 +79,14 @@ export class UsuarioComponent implements OnInit {
   @ViewChild('seeMoreModal') seeMoreModal: ElementRef; 
   
   ngOnInit(): void {
+    this.inicializarFormulario();
     this.listarUsuario();
     this.listarRoles();
-    this.inicializarFormulario();
     this.USU_ID = this.storageService.getString('USE_ID');
   }
 
   inicializarFormulario(){
-    this.userForm = this.formBuilder.group({
-      user:['',[Validators.required, Validators.maxLength(60)]],
-      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/), Validators.maxLength(60)]],
-      contrasena: ['', [Validators.minLength(8), Validators.maxLength(20)]],
-      nombres: ['', [Validators.required, Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(50)]],
-      apellido_paterno: ['', [Validators.required, Validators.pattern('^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$'), Validators.maxLength(30)]],
-      apellido_materno: ['', [Validators.required, Validators.pattern('^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$'), Validators.maxLength(30)]],
-      fecha_nacimiento: ['', [Validators.required ]],
-      celular: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(9), Validators.minLength(9)]] ,
-      dni: ['', [Validators.required, Validators.pattern(/^([0-9])*$/), Validators.minLength(8),  Validators.maxLength(8)]],
-      direccion: ['', [Validators.required , Validators.pattern('^[a-zñáéíóú#°/,. A-ZÑÁÉÍÓÚ  0-9]+$'), Validators.maxLength(100)]],
-      rol:['',[Validators.required]],
-      sexo_:['']
-    });
+   this.userForm.reset();
   }
 
 
@@ -125,9 +127,11 @@ export class UsuarioComponent implements OnInit {
   get sexo_(){
     return this.userForm.get('sexo');
   }
+  
   obtenerSexo(sexo: string) {
     this.sexo = sexo;
   } 
+  
 
   listarUsuario(){
     this.cargando=true;
@@ -158,6 +162,7 @@ export class UsuarioComponent implements OnInit {
     this.rolService.listRols().subscribe(
       data=>{
         this.roles = data.resultado;
+        console.log(this.roles);
       }
       ,error=>{
         this.cargando = false;
@@ -287,8 +292,9 @@ export class UsuarioComponent implements OnInit {
   }
   usuar_editar : Usuario = new Usuario();
   editUser(usuario:any){
+    this.IdUsuario= usuario.USU_ID;
     this.usuar_editar = usuario;
-    console.log(this.usuar_editar);
+    /*console.log(this.usuar_editar);
     this.mostrar_alerta = false;
     this.user!.setValue(usuario.USU_USUARIO);
     this.email!.setValue(usuario.USU_EMAIL);
@@ -307,7 +313,7 @@ export class UsuarioComponent implements OnInit {
     if(usuario.USU_SEXO == 'M'){
       this.sexo.setValue(1);
     }else if(usuario.USU_SEXO == 'F') this.sexo.setValue(0);
-    this.modal.open(this.editUserModal);
+    this.modal.open(this.editUserModal);*/
   }
 
   updateUser(){
