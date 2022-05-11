@@ -142,8 +142,42 @@ export class CategoriaComponent implements OnInit {
 
   }
 
+ 
   catUpdate(cat:Categoria){
-
+    this.cargaModal = true;
+    this.modalIn = true;
+    this.mostrarAlerta = false;
+    cat.CAT_NOMBRE= this.nombreCategoria?.value; 
+    this.categoriaService.editarCategoria(cat).subscribe(data => {
+      this.categoriaForm.reset();
+      this.modalIn = false;
+      this.cargaModal = false;
+      this.modal.dismissAll();  
+      this.listarCategorias(); 
+      this.tipoAlerta = 'success';
+      this.mostrarAlerta = true; 
+      this.mensajeAlerta = 'Se ha actualizado la categoría satisfactoriamente.';
+    },error=>{
+      this.modalIn = true;
+      this.cargaModal = false; 
+      this.mostrarAlerta = true;
+      this.tipoAlerta='danger';
+      if (error['error']['error'] !== undefined) {
+        if (error['error']['error'] === 'error_deBD') {
+          this.mensajeAlerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página.';
+        }else if(error.error.error === 'error_deCampo'){
+          this.mensajeAlerta = 'Los datos ingresados son invalidos. Por favor, vuelva a intentarlo.';
+        }else if (error['error']['error'] === 'error_noExistenciaId') {
+          this.mensajeAlerta = 'La categoría seleccionada no existe.';
+        }else if (error['error']['error'] === 'error_exitenciaNombre') {
+          this.mensajeAlerta = 'El nombre ingresado ya existe.';
+        }
+      }
+      else{
+        this.mensajeAlerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página.';
+      }
+    }
+    );
   }
   
   listarCategorias(){

@@ -33,13 +33,12 @@ export class CategoriaService {
   }
 
   
-  /*editarCategoria(categoria:Categoria){
+  editarCategoria(cat:Categoria){
     const url = environment.domain_url + '/api/categoria/actualizar';
     const datos = {
-      CAT_NOMBRE     : categoria.CAT_NOMBRE,
-      CAT_ID         : categoria.CAT_ID,
-      IDTIPO_CLIENTE : categoria.IDTIPO_CLIENTE
+      CAT_ID : cat.CAT_ID,
+      CAT_NUEVO_NOMBRE : cat.CAT_NOMBRE
     }    
     return this.http.put<any>(url,datos).pipe( retry(2));
-  }*/
+  }
 }
