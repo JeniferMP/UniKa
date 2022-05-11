@@ -13,7 +13,7 @@ export class PrendaService {
 
 
 listarPrendasHabilitadasPorCategoria(idCat:number):Observable<any>{
-    const url = environment.domain_url + '/api/productos/listarPrendasHabilitadasPorCategoria.php?CAT_ID='+idCat;
+    const url = environment.domain_url + '/api/prenda/listarPrendasHabilitadasPorCategoria.php?CAT_ID='+idCat;
     return this.http.get<any>(url).pipe( retry(2) );
   }
 }

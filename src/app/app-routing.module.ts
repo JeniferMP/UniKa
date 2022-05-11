@@ -5,6 +5,7 @@ import {AuthRoutingModule} from './auth/auth-routing.module';
 import { LayoutRoutingModule } from './layout/layout-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 import {UsuarioComponent} from './layout/usuario/usuario.component';
+import { PrendaComponent } from './layout/prenda/prenda.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   //{path: 'layout',loadChildren: ()=> import('./layout/layout.module').then( m=>m.LayoutModule )   },
   {path: 'layout', component: LayoutComponent},
   {path: 'usuario',component:UsuarioComponent},
+  {path: 'prenda',component:PrendaComponent},
   {path:'',redirectTo:'',pathMatch:'full'},
   {path:'**',redirectTo:''},
   //{path:'not-found',component:NotfoundComponent}
