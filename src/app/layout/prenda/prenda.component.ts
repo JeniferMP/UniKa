@@ -35,7 +35,13 @@ export class PrendaComponent implements OnInit {
   ngOnInit(): void {
     this.listarProductos(2)
 
+    
   }
+  openCentrado(contenido: any) {
+    this.modal.open(contenido, { centered: true });
+  }
+
+
 
   listarProductos(id_cat:number){
     this.cargando = true;
