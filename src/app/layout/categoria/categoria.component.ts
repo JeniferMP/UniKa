@@ -112,7 +112,7 @@ export class CategoriaComponent implements OnInit {
     this.cargaModal = true;
     this.modalIn = true;
     this.mostrarAlerta = false; 
-    this.categoriaService.crearCategoria(this.categoriaInsertar).subscribe(data => {
+    this.categoriaService.crearCategoria(this.categoriaInsertar.CAT_NOMBRE).subscribe(data => {
       
       this.categoriaForm.reset();
       this.cargaModal = false;
