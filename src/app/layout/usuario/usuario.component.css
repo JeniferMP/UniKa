@@ -89,3 +89,10 @@
        width: 100%;
    }
 } 
+
+.container{
+    text-align: center;
+    position: relative;
+    height: 100%;
+    left: 10px;
+}

@@ -1,9 +1,9 @@
 
 
-<div class="container-fluid py-4">
+<div class="container">
     <div class="row">
-        <div class="col-12">
-            <div class="card mb-4">
+        <div class="col-10">
+            <div class="card mb-4" >
                 <div class="card-header pb-0 row justify-content-between">
                         <div class="py-1 col-sm-12 col-md-5 col-lg-4">
                             <div class="row">
@@ -27,30 +27,30 @@
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Celular</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rol</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let usuario of usuarios |filterUserByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  ">
-                                    <td class="d-flex flex-column justify-content-center mb-0 text-sm"   class="color-row-table" >{{usuario.USU_ID}}</td>
-                                    <td class=""   class="color-row-table" >{{usuario.USU_NOMBRES}}</td>
-                                    <td class="align-middle text-center text-sm">{{usuario.USU_APELLIDO_PATERNO}}&nbsp;{{usuario.USU_APELLIDO_MATERNO}}</td> 
-                                    <td class="align-middle text-center" >{{usuario.USU_CELULAR}}</td>
-                                    <td class="align-middle" >{{usuario.ROL_ID==1?'Empleado':'Administrador'}}</td>
+                                    <td class=""   class="" >{{usuario.USU_ID}}</td>
+                                    <td class=""   class="" >{{usuario.USU_NOMBRES}}</td>
+                                    <td class="">{{usuario.USU_APELLIDO_PATERNO}}&nbsp;{{usuario.USU_APELLIDO_MATERNO}}</td> 
+                                    <td class="" >{{usuario.USU_CELULAR}}</td>
+                                    <td class="" >{{usuario.ROL_ID==1?'Empleado':'Administrador'}}</td>
                                     <td *ngIf="usuario.USU_ID != USU_ID">{{usuario.USU_ESTADO==1?'Activo':'Inactivo'}}</td>
                                     <div class="row btnes">
-                                        <div class="button-table"  *ngIf="usuario.USU_ESTADO != 1 && usuario.USU_ESTADO !=2; else Habilitar">
+                                        <!-- <div class="button-table"  *ngIf="usuario.USU_ESTADO != 1 && usuario.USU_ESTADO !=2; else Habilitar">
                                             <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)" class="btn btn-success btn-circle btn-sm " ngbTooltip="Habilitar">
                                                 <i class="fas fa-check" aria-hidden="true"></i>
                                             </span>
-                                        </div>
-                                        <ng-template #Habilitar>
+                                        </div> -->
+                                        <!-- <ng-template #Habilitar>
                                             <div class=" button-table">
                                                 <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)"  class="btn btn-danger btn-circle btn-sm "ngbTooltip="Deshabilitar">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
                                                 </span>
                                             </div>
-                                        </ng-template>
+                                        </ng-template> -->
                                         <div class="col-1 button-table">
                                             <span   (click)="seeMore(usuario)" class="btn btn-primary btn-circle btn-sm" ngbTooltip="Ver Más" >
                                                 <i class="fas fa-eye" aria-hidden="true"   ></i>
