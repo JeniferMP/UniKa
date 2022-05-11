@@ -12,7 +12,6 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { PrendaComponent } from './prenda/prenda.component';
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { DirectivesModule } from '../shared/directives/directives.module';
-import { EditarUsuarioComponent } from './usuario/editar-usuario/editar-usuario.component';
 
 
 @NgModule({
@@ -21,9 +20,8 @@ import { EditarUsuarioComponent } from './usuario/editar-usuario/editar-usuario.
     UsuarioComponent,
     DahsboardComponent,
     CategoriaComponent,
-    PrendaComponent,
-    EditarUsuarioComponent,
-  
+    PrendaComponent
+
   ],
   imports: [
     CommonModule,
