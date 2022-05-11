@@ -8,18 +8,31 @@
           <table class="table table-striped mt-6">
             <thead>
               <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
                 <th scope="col">Codigo</th>
+                <th scope="col">Nombre</th>
+                <!-- <th scope="col">Codigo</th> -->
                 <th scope="col">Marca</th>
                 <th scope="col">Precio</th>
-                <th scope="col">Imagen</th>
-                <th scope="col">Estado</th>
+                <!-- <th scope="col">Imagen</th>
+                <th scope="col">Estado</th> -->
                 <th scope="col">Categoria</th>
                 <th scope="col">Opciones</th>
               </tr>
             </thead>
             <tbody>
+              <tr *ngFor="let prenda of prendas">
+                <td>{{ prenda.PREN_CODIGO }}</td>
+                <td>{{ prenda.PREN_NOMBRE }}</td>
+                <td>{{ prenda.PREN_MARCA }}</td>
+                <td>{{ prenda.PREN_PRECIO | currency:'S/ ' }}</td>
+                <td>{{ prenda.CAT_NOMBRE }}</td>
+                <td>
+                    <i  class="fas fa-edit text-primary"></i>
+                    <i  class="fas fa-trash text-danger"></i>
+                </td>
+              </tr>
+            </tbody>
+            <!-- <tbody>
               <tr>
                 <td>Id</td>
                 <td>Nombre</td>
@@ -34,7 +47,7 @@
                   <i class="bi bi-trash-fill text-danger col-1" style="font-size: 1.3em;"></i>
                 </td>
               </tr>
-            </tbody>
+            </tbody> -->
           </table>
           <h5 style="text-align: start; margin-top: 10px" *ngIf="">
             No hay productos para mostrar
