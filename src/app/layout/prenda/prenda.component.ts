@@ -33,7 +33,7 @@ export class PrendaComponent implements OnInit {
   mostrar_alerta: boolean = false;
   tipo_alerta :string;
   ngOnInit(): void {
-    this.listarProductos(1)
+    this.listarProductos(2)
 
   }
 
@@ -43,6 +43,7 @@ export class PrendaComponent implements OnInit {
     this.prendaService.listarPrendasHabilitadasPorCategoria(id_cat).subscribe(
       (data)=>{
         this.prendas_iniciales = data['resultado'];
+        this.prendas = this.prendas_iniciales.slice();
         this.cargando = false;
       },
       (error) =>{
