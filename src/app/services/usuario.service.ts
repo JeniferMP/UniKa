@@ -40,7 +40,7 @@ export class UsuarioService {
   }
   
   getUserById(userId : number):Observable<any>{
-    const url = environment.domain_url + `/api/usuarios/obtenerUsuario.php?USU_ID=${userId}`;
+    const url = environment.domain_url + `/api/usuarios/buscarUsuario.php?USU_ID=${userId}`;
     return this.http.get<any>(url).pipe(retry(2));
   }
 
