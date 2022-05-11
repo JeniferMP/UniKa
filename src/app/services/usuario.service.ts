@@ -39,8 +39,8 @@ export class UsuarioService {
     return this.http.post<any>(url,datos).pipe(retry(1));
   }
   
-  getUserById(userId : number):Observable<any>{
-    const url = environment.domain_url + `/api/usuarios/buscarUsuario.php?USU_ID=${userId}`;
+  getUserById(USU_ID : number):Observable<any>{
+    const url = environment.domain_url + `/api/usuarios/obtenerUsuario.php?USU_ID=${USU_ID}`;
     return this.http.get<any>(url).pipe(retry(2));
   }
 
@@ -71,7 +71,7 @@ export class UsuarioService {
       USU_ID: USU_ID,
       USU_ESTADO: numeroEstado
     }
-    return this.http.put<any>(url,datos).pipe( retry(2) );
+    return this.http.put<any>(url,datos).pipe( retry(2));
   }
 
   updateProfile(usuario:Usuario):Observable<any>{

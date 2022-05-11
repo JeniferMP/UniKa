@@ -8,7 +8,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { RolService } from 'src/app/services/rol.service';
 import { compare, SorteableDirective } from 'src/app/shared/directives/sorteable.directive';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-usuario',
@@ -86,7 +86,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   inicializarFormulario(){
-   this.userForm.reset();
+  this.userForm.reset();
   }
 
 
@@ -294,14 +294,14 @@ export class UsuarioComponent implements OnInit {
   editUser(usuario:any){
     this.IdUsuario= usuario.USU_ID;
     this.usuar_editar = usuario;
-    /*console.log(this.usuar_editar);
+    console.log(this.usuar_editar);
     this.mostrar_alerta = false;
     this.user!.setValue(usuario.USU_USUARIO);
     this.email!.setValue(usuario.USU_EMAIL);
     this.nombres!.setValue(usuario.USU_NOMBRES);
     this.contrasena!.setValue('');
     console.log(usuario.USU_FECHA_NACIMIENTO);
-    this.fecha_nacimiento!.setValue(this.datePipe.transform(usuario.USU_FECHA_NACIMIENTO, 'yyyy-MM-dd'));
+    this.fecha_nacimiento!.setValue('');
     console.log(this.fecha_nacimiento!.value);
     this.direccion!.setValue(usuario.USU_DIRECCION);
     this.apellido_paterno!.setValue(usuario.USU_APELLIDO_PATERNO);
@@ -311,9 +311,9 @@ export class UsuarioComponent implements OnInit {
     this.rol!.setValue(usuario.ROL_ID);
 
     if(usuario.USU_SEXO == 'M'){
-      this.sexo.setValue(1);
-    }else if(usuario.USU_SEXO == 'F') this.sexo.setValue(0);
-    this.modal.open(this.editUserModal);*/
+      this.sexo_!.setValue(1);
+    }else if(usuario.USU_SEXO == 'F') this.sexo_!.setValue(0);
+    this.modal.open(this.editUserModal);
   }
 
   updateUser(){
@@ -397,7 +397,7 @@ export class UsuarioComponent implements OnInit {
       this.PASSWORD_CURRENT_TYPE = 'password';
     }
   }
-  getTodayFechaNacimiento(): string {
+  getTodayFechaNacimiento(): any {
     const fechaActual = this.datePipe.transform(new Date(), 'yyyy-MM-dd').split('-');
     const dia = fechaActual[2];
     const mes = fechaActual[1];
