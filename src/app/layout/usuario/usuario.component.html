@@ -87,6 +87,7 @@
     <div class="modal-header justify-content-center">
         <h4 class="modal-title">Registrar Usuario</h4>
     </div>
+    <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
     <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
     <div class="modal-body">
         <form [formGroup]="userForm">
