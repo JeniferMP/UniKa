@@ -13,10 +13,11 @@ export class CategoriaService {
 
   constructor(private http: HttpClient) { }
 
-  crearCategoria(nombre:string){
+  crearCategoria(cat:Categoria){
     const url = environment.domain_url + '/api/categoria/insertar';
     const datos = {
-      CAT_NOMBRE : nombre
+      CAT_NOMBRE : cat.CAT_NOMBRE,
+      IDTIPO_CLIENTE : cat.IDTIPO_CLIENTE,
     }     
     return this.http.post<string>(url,datos).pipe( retry(2) );   
   } 
