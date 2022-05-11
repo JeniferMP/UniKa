@@ -1,5 +1,5 @@
 
-<div class="row justify-content-center">
+<div class="container">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800 col-12 text-center">Categorías de prendas</h1>
@@ -11,7 +11,7 @@
                 <div class="py-1 col-sm-12 col-md-7 col-lg-7">
                     <div class="row">
                         <div class="col-9 col-lg-7">
-                            <input type="text" class="border-left-primary font-tamanio form-control" name="filtroTexto" placeholder="Buscar..." [(ngModel)]="filtroTexto">
+                            <input type="text" class="border-left-primary font-tamanio form-control" [(ngModel)]="filtroTexto"  name="filtroTexto" placeholder="Buscar..." >
                         </div>
                         <div class="col-3 col-lg-2  py-1">
                             <button (click)="filtrarCategoria()" [disabled]="carga" style="float:right" style="width: 100%;" type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
@@ -98,14 +98,17 @@
                         <div class="form-group col-md-12">
                             <label>Nombre de la categoría</label>
                             <input input="inputNombreCategoria" type="text" formControlName="nombreCategoria" class="form-control" placeholder="categoría">
-                            <!--div *ngIf="nombreCategoria.invalid && (nombreCategoria.dirty || nombreCategoria.touched)" class="my-1" style="color: rgb(197, 68, 68);">
-                                <div *ngIf="nombreCategoria.errors.required">
+                            <div *ngIf="nombreCategoria?.invalid && (nombreCategoria?.dirty || nombreCategoria?.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="nombreCategoria!.errors!.required">
                                 * El nombre de la categoría es requerido.
                                 </div>
-                                <div *ngIf="nombreCategoria.errors.maxlength">
+                                <div *ngIf="nombreCategoria!.errors!.maxlength">
                                 * Se requieren máximo 60 caracteres.
                                 </div>
-                            </div-->
+                                <div *ngIf="nombreCategoria!.errors!.pattern">
+                                    * El formato es inválido.
+                                    </div>
+                            </div>
                         </div>  
                         
                         <div class="form-group col-md-12">
@@ -115,11 +118,11 @@
                                 <option [value]="tipo.IDTIPO_CLIENTE" *ngFor="let tipo of tipoClientes">{{tipo.NOMBRE_TIPO_CLIENTE}}</option>
                             </select>
                         </div>
-                        <!--div *ngIf="categoria.invalid && (categoria.dirty || categoria.touched)" class="my-1" style="color: rgb(197, 68, 68);">
-                            <div *ngIf="categoria.errors.required">
+                        <div *ngIf="tipoCliente?.invalid && (tipoCliente?.dirty || tipoCliente?.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <div *ngIf="tipoCliente!.errors!.required">
                                 * La categoría es requerida.
                             </div>
-                        </div-->
+                        </div>
                         
                     </form>
 
@@ -141,4 +144,49 @@
         </div>
     </div>
 
+</ng-template>
+
+<ng-template #editarCategoria let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Categoría: {{categoriaSeleccionada.CAT_NOMBRE}}</h4>
+    </div>
+    <!--mat-progress-bar *ngIf="cargaModal && modalIn" mode="indeterminate"></mat-progress-bar-->
+    <ngb-alert *ngIf="mostrarAlerta && modalIn" [type]="tipoAlerta" (closed)="mostrarAlerta = false" >{{mensajeAlerta}}</ngb-alert>
+    <div class="modal-body">
+        <br>
+        <form [formGroup]="categoriaForm">
+            <div class="form-group row">
+                <div class="col-6">
+                    <label for="inputNombreCategoria">Nombre de la categoría</label>
+                </div>
+                <div>
+                    <input input="inputNombreCategoria" type="text" formControlName="nombreCategoria" class="border-left-primary font-tamanio form-control" placeholder="Ingrese la categoría">
+                    <div *ngIf="nombreCategoria?.invalid && (nombreCategoria?.dirty || nombreCategoria?.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                        <div *ngIf="nombreCategoria!.errors!.required">
+                        * El nombre de la categoría es requerido.
+                        </div>
+                        <div *ngIf="nombreCategoria!.errors!.maxlength">
+                        * Se requieren máximo 60 caracteres.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br>
+        <div class="row justify-content-center ">
+            <div class="my-1 col-sm-3 col-md-4 col-lg-4">
+                <button [disabled]="categoriaForm.invalid || cargaModal" (click)="catUpdate(categoriaSeleccionada)" class="btn btn-primary btn-icon-split" >
+                    <span class="text">Actualizar&nbsp;<i class="fas fa-save"></i></span>
+                </button>
+            </div>
+            <div class="my-1 col-sm-3 col-md-4 col-lg-4">
+                <button [disabled]="cargaModal" (click) = "d('Cross click')" class="btn btn-warning btn-icon-split">
+                    <span class="text">Cancelar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+    </div>  -->
 </ng-template>

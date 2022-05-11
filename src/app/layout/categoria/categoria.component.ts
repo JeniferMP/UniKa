@@ -59,7 +59,7 @@ export class CategoriaComponent implements OnInit {
 
   inicializarFormulario(){
     this.categoriaForm = this.formBuilder.group({
-      nombreCategoria:['',[Validators.required, Validators.maxLength(60)]],
+      nombreCategoria:['',[Validators.required, Validators.maxLength(60),Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+')]],
       tipoCliente : ['',[Validators.required]],
     });
   }
@@ -142,6 +142,9 @@ export class CategoriaComponent implements OnInit {
 
   }
 
+  catUpdate(cat:Categoria){
+
+  }
   
   listarCategorias(){
     
