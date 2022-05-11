@@ -42,12 +42,15 @@ export class CategoriaComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
 
+  categoriaInsertar = new Categoria;
+
    //modal para editar una categoria
    @ViewChild('editarCategoria') editarCat: ElementRef;
    //modal para crear una categoria
    @ViewChild('crearCategoria') crearCat: ElementRef;
 
   ngOnInit(): void {
+    
     this.carga = true;
     this.listarCategorias();
     this.listarTiposCliente();
@@ -94,11 +97,22 @@ export class CategoriaComponent implements OnInit {
       }
     );
   }
-  insertarCategoria(){
+
+  insertarCategoria(cat:any){
+    this.carga = true;
+    this.modalIn = true;
+    this.mostrarAlerta = false;
+    this.categoriaInsertar.CAT_NOMBRE = cat.nombreCategoria; 
+    this.categoriaInsertar.IDTIPO_CLIENTE =  cat.tipoCliente;
+    console.log(this.nombreCategoria);
+    this.crearNuevaCategoria();
+  }
+
+  crearNuevaCategoria(){
     this.cargaModal = true;
     this.modalIn = true;
     this.mostrarAlerta = false; 
-    this.categoriaService.crearCategoria(this.nombreCategoria?.value).subscribe(data => {
+    this.categoriaService.crearCategoria(this.categoriaInsertar).subscribe(data => {
       
       this.categoriaForm.reset();
       this.cargaModal = false;

@@ -97,12 +97,20 @@
                         
                         <div class="form-group col-md-12">
                             <label>Nombre de la categoría</label>
-                            <input type="Nombre" class="form-control" placeholder="Email">
+                            <input input="inputNombreCategoria" type="text" formControlName="nombreCategoria" class="form-control" placeholder="categoría">
+                            <!--div *ngIf="nombreCategoria.invalid && (nombreCategoria.dirty || nombreCategoria.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="nombreCategoria.errors.required">
+                                * El nombre de la categoría es requerido.
+                                </div>
+                                <div *ngIf="nombreCategoria.errors.maxlength">
+                                * Se requieren máximo 60 caracteres.
+                                </div>
+                            </div-->
                         </div>  
                         
                         <div class="form-group col-md-12">
                             <label>Tipo de cliente</label>
-                            <select id="inputState" class="form-control">
+                            <select id="inputState"formControlName="tipoCliente" class="form-control">
                                 <option hidden value="" disabled selected>Escoge una opción</option>
                                 <option [value]="tipo.IDTIPO_CLIENTE" *ngFor="let tipo of tipoClientes">{{tipo.NOMBRE_TIPO_CLIENTE}}</option>
                             </select>
@@ -117,7 +125,7 @@
 
                     <br><div class="row justify-content-center ">
                         <div class="my-1 col-sm-3 col-md-4 col-lg-4">
-                            <button [disabled]=" cargaModal"  (click)="insertarCategoria()" class="btn btn-primary btn-icon-split" >
+                            <button (click)="insertarCategoria(categoriaForm.value)" [disabled]="categoriaForm.invalid || carga" class="btn btn-primary btn-icon-split" >
                                 <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
                             </button>
                         </div>
