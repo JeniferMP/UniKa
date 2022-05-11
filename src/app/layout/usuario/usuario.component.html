@@ -87,6 +87,7 @@
     <div class="modal-header justify-content-center">
         <h4 class="modal-title">Registrar Usuario</h4>
     </div>
+    <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
     <div class="modal-body">
         <form [formGroup]="userForm">
             <div class="form-group">
@@ -308,8 +309,6 @@
             </button>
         </div>
     </div>
-
-
 </ng-template>
 
 <ng-template #seeMoreModal>
@@ -422,6 +421,7 @@
     <div class="modal-header justify-content-center">
         <h4 class="modal-title">Actualizar Usuario</h4>
     </div>
+    
     <div class="modal-body">
         <form [formGroup]="userForm">
             <div class="form-group">
