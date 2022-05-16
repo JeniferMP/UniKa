@@ -33,7 +33,7 @@ export class PrendaComponent implements OnInit {
   mostrar_alerta: boolean = false;
   tipo_alerta :string;
   ngOnInit(): void {
-    this.listarProductos(2)
+    this.listarPrendas()
 
     
   }
@@ -47,6 +47,32 @@ export class PrendaComponent implements OnInit {
     this.cargando = true;
     this.modalIn = false;
     this.prendaService.listarPrendasHabilitadasPorCategoria(id_cat).subscribe(
+      (data)=>{
+        this.prendas_iniciales = data['resultado'];
+        this.prendas = this.prendas_iniciales.slice();
+        this.cargando = false;
+      },
+      (error) =>{
+        this.cargando = false;
+        this.mostrar_alerta = true;
+        this.tipo_alerta='danger';
+        this.modalIn = false;
+        if (error['error']['error'] !== undefined) {
+          if (error['error']['error'] === 'error_deBD') {
+            this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página.';
+          }
+        }
+        else{
+          this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página.';
+        }
+      }
+    ); 
+  }
+
+  listarPrendas(){
+    this.cargando = true;
+    this.modalIn = false;
+    this.prendaService.listarPrendas().subscribe(
       (data)=>{
         this.prendas_iniciales = data['resultado'];
         this.prendas = this.prendas_iniciales.slice();
