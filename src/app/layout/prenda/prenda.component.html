@@ -4,7 +4,59 @@
       <div class="card">
         <div class="card-body text-center">
           <span class="titulo">LISTADO DE PRENDAS</span>
-          <button class="btn btn-success float-end" routerLink="">NUEVO</button>
+
+          <button type="button" class="btn btn-outline-success float-end" (click)="openCentrado(contenido)">Crear Prenda</button>
+
+          <ng-template #contenido let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title">Crear Nueva Prenda</h4>
+              <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Codigo</label>
+                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
+                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
+                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Marca</label>
+                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
+                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Precio</label>
+                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
+                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Categoria</label>
+                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
+                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
+                </div>
+
+
+
+
+                
+              </form>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" (click)="modal.close()">Crear</button>
+            </div>
+          </ng-template>
+
+
+
+
           <table class="table table-striped mt-6">
             <thead>
               <tr>
@@ -24,11 +76,11 @@
                 <td>{{ prenda.PREN_CODIGO }}</td>
                 <td>{{ prenda.PREN_NOMBRE }}</td>
                 <td>{{ prenda.PREN_MARCA }}</td>
-                <td>{{ prenda.PREN_PRECIO | currency:'S/ ' }}</td>
+                <td>{{ prenda.PREN_PRECIO | currency: "S/ " }}</td>
                 <td>{{ prenda.CAT_NOMBRE }}</td>
                 <td>
-                    <i  class="fas fa-edit text-primary"></i>
-                    <i  class="fas fa-trash text-danger"></i>
+                  <i class="fas fa-edit text-primary"></i>
+                  <i class="fas fa-trash text-danger"></i>
                 </td>
               </tr>
             </tbody>
