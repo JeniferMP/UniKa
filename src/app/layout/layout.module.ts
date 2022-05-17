@@ -12,6 +12,7 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { PrendaComponent } from './prenda/prenda.component';
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { DirectivesModule } from '../shared/directives/directives.module';
+import { ProveedorComponent } from './proveedor/proveedor.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { DirectivesModule } from '../shared/directives/directives.module';
     UsuarioComponent,
     DahsboardComponent,
     CategoriaComponent,
-    PrendaComponent
+    PrendaComponent,
+    ProveedorComponent
 
   ],
   imports: [

@@ -1,111 +1,149 @@
-<div class="container mt-5">
+
+
+<div class="container">
   <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-body text-center">
-          <span class="titulo">LISTADO DE PRENDAS</span>
-
-          <button type="button" class="btn btn-outline-success float-end" (click)="openCentrado(contenido)">Crear Prenda</button>
-
-          <ng-template #contenido let-modal>
-            <div class="modal-header">
-              <h4 class="modal-title">Crear Nueva Prenda</h4>
-              <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Codigo</label>
-                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
-                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Nombre</label>
-                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
-                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Marca</label>
-                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
-                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Precio</label>
-                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
-                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Categoria</label>
-                  <input type="form" class="form-control" id="codigo" aria-describedby="emailHelp">
-                  <!-- <div id="emailHelp" class="form-text">Escribe un Codigo Unico.</div> -->
-                </div>
-
-
-
-
-                
-              </form>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success" (click)="modal.close()">Crear</button>
-            </div>
-          </ng-template>
-
-
-
-
-          <table class="table table-striped mt-6">
-            <thead>
-              <tr>
-                <th scope="col">Codigo</th>
-                <th scope="col">Nombre</th>
-                <!-- <th scope="col">Codigo</th> -->
-                <th scope="col">Marca</th>
-                <th scope="col">Precio</th>
-                <!-- <th scope="col">Imagen</th>
-                <th scope="col">Estado</th> -->
-                <th scope="col">Categoria</th>
-                <th scope="col">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let prenda of prendas">
-                <td>{{ prenda.PREN_CODIGO }}</td>
-                <td>{{ prenda.PREN_NOMBRE }}</td>
-                <td>{{ prenda.PREN_MARCA }}</td>
-                <td>{{ prenda.PREN_PRECIO | currency: "S/ " }}</td>
-                <td>{{ prenda.CAT_NOMBRE }}</td>
-                <td>
-                  <i class="fas fa-edit text-primary"></i>
-                  <i class="fas fa-trash text-danger"></i>
-                </td>
-              </tr>
-            </tbody>
-            <!-- <tbody>
-              <tr>
-                <td>Id</td>
-                <td>Nombre</td>
-                <td>Codigo</td>
-                <td>Marca</td>
-                <td>Precio</td>
-                <td>Imagen</td>
-                <td>Estado</td>
-                <td>Categoria</td>
-                <td>
-                  <i class="bi bi-pencil-square text-primary col-1" style="font-size: 1.3em;"></i>
-                  <i class="bi bi-trash-fill text-danger col-1" style="font-size: 1.3em;"></i>
-                </td>
-              </tr>
-            </tbody> -->
-          </table>
-          <h5 style="text-align: start; margin-top: 10px" *ngIf="">
-            No hay productos para mostrar
-          </h5>
-        </div>
+      <div class="col-11">
+          <div class="card mb-4" >
+              <div class="card-header pb-0 row justify-content-between">
+                      <div class="py-1 col-sm-12 col-md-5 col-lg-4">
+                          <div class="row">
+                              <div class="col">
+                                  <!-- <input type="text" class="border-left-primary font-tamanio form-control" [(ngModel)]="filtroTexto"  name="filtroTexto" placeholder="Buscar..." > -->
+                              </div>
+                          </div>
+                      </div>
+                      <div class="py-1 col-sm-12 col-md-4 col-lg-3" >
+                          <button  (click)="registerPrendaModal()" style="float:right" type="button" class="boton btn btn-primary ">Nueva prenda</button>
+                      </div>                
+              </div>
+              <div class="card-body px-0 pt-0 pb-2">
+                  <div class="table-responsive p-0">
+                      <table class="table align-items-center mb-0">
+                          <thead>
+                              <tr>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Codigo</th>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombre</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Marca</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Categoría</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">Acciones</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <!-- <tr *ngFor="let prenda of prendas |filterUserByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  "> -->
+                              <tr *ngFor="let prenda of prendas; let i = index  ">
+                                  <td class="" >{{prenda.PREN_CODIGO}}</td>
+                                  <td class="" >{{prenda.PREN_NOMBRE}}</td>
+                                  <td class="" >{{prenda.PREN_MARCA}}</td> 
+                                  <td class="" >{{prenda.PREN_PRECIO}}</td>
+                                  <td class="" >{{prenda.CAT_NOMBRE}}</td>
+                                  <td *ngIf="prenda.PREN_ID != PREN_ID">{{prenda.PREN_ESTADO==1?'Activo':'Inactivo'}}</td>
+                                  <div class="row btnes">
+                                      <!-- <div class="button-table"  *ngIf="usuario.USU_ESTADO != 1 && usuario.USU_ESTADO !=2; else Habilitar">
+                                          <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)" class="btn btn-success btn-circle btn-sm " ngbTooltip="Habilitar">
+                                              <i class="fas fa-check" aria-hidden="true"></i>
+                                          </span>
+                                      </div> -->
+                                      <!-- <ng-template #Habilitar>
+                                          <div class=" button-table">
+                                              <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)"  class="btn btn-danger btn-circle btn-sm "ngbTooltip="Deshabilitar">
+                                                  <i class="fa fa-times" aria-hidden="true"></i>
+                                              </span>
+                                          </div>
+                                      </ng-template> -->
+                                      <div class="col-1 button-table">
+                                          <!-- <span   (click)="seeMore(usuario)" class="btn btn-primary btn-circle btn-sm" ngbTooltip="Ver Más" >
+                                              <i class="fas fa-eye" aria-hidden="true"   ></i>
+                                          </span> -->
+                                      </div>
+                                      <div class="col-1 button-table btn-edit">
+                                          <!-- <button (click)="editUser(usuario)" class="btn btn-warning btn-circle btn-sm" ngbTooltip="Editar" >
+                                              <i style="color: white;" class="far fa-edit" aria-hidden="true"   ></i>
+                                          </button> -->
+                                      </div>
+                                  </div>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+              <div *ngIf="prendas.length>0" class="row box-footer clearfix mt-3">     
+                  <div class="col-xl-10 col-lg-9 col-md-7 col-sm-7 col-6">
+                  <ngb-pagination *ngIf="prendas.length>5" class="d-flex justify-content-start" size="sm" [maxSize]="5" [pageSize]="itemsPerPage"  [collectionSize]="prendas.length" [(page)]="currentPage"></ngb-pagination>
+                  </div>
+                  <div class="col-xl-2 col-lg-3 col-md-5 col-sm-5 col-6">
+                  <select class="pull-right" [(ngModel)]="itemsPerPage" class="form-control form-control-sm custom-select">
+                      <option value="50">50 elementos</option>                    
+                      <option value="100">100 elementos</option>                    
+                      <option value="200">200 elementos</option>                    
+                  </select>  
+                  </div>    
+                  </div>
+          </div>
       </div>
-    </div>
-  </div>
+  </div>  
 </div>
+
+<ng-template #createPrendaModal let-d="dismiss">
+  <div class="modal-header justify-content-center">
+      <h4 class="modal-title">Registrar Prenda</h4>
+  </div>
+  <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
+  <!-- <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert> -->
+  <div class="modal-body">
+      <form [formGroup]="prendaForm">
+          <div class="form-group">
+              <div class="row justify-content-center">
+                  <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                      <label for="inputNombres">Nombre</label>
+                      <div>
+                          <input type="text" formControlName="nombre" id="inputNombre" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Nombre">
+                          <div *ngIf="nombre!.invalid && (nombre!.dirty || nombre!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                              <div *ngIf="nombre!.errors!.required">
+                              * El nombre de prenda es requerido.
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                      <label for="inputMarca">Marca</label>
+                      <div>
+                        <input type="text" formControlName="marca" id="inputMarca" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Marca">
+                        <div *ngIf="marca!.invalid && (marca!.dirty || marca!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <div *ngIf="marca!.errors!.required">
+                            * La marca de la prenda es requerida.
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+              <!-- <div class="row justify-content-center">
+                  <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                      <label class="mr-sm-2" for="inputRol">Rol</label>
+                      <select  formControlName="rol" id="inputRol" class="border-left-primary form-select mr-sm-2" >
+                          <option hidden value="" disabled>Escoge una opción</option>
+                          <option [value]="rol.ROL_ID" *ngFor="let rol of roles">{{rol.ROL_NOMBRE}}</option>
+                          <div *ngIf="rol!.invalid && (rol!.dirty || rol!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                              <div *ngIf="rol!.errors!.required">
+                                  * El rol es requerido.
+                              </div>
+                          </div>
+                      </select>                        
+                  </div>
+              </div> -->
+          </div>
+      </form>
+  </div>
+  <!-- <div class="row d-flex text-center justify-content-center">
+      <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
+          <button  (click)="createUser();" [disabled]="userForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
+              <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
+          </button>
+      </div>
+      <div class="my-2 col-sm-12 col-md-12 col-lg-3">
+          <button [disabled]="cargando" (click)="d('Cross click')" class="btn btn-warning btn-icon-split">
+              <span class="text">Cancelar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
+          </button>
+      </div>
+  </div> -->
+</ng-template>

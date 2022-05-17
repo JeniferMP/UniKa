@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,ElementRef, OnInit,ViewChild } from '@angular/core';
 import { PrendaService } from 'src/app/services/prenda.service';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,36 +12,59 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class PrendaComponent implements OnInit {
 
+  prendas:any[]=[];
+  prendas_iniciales: any[] = [];
+  categorias_iniciales: any[]=[];
+  categorias: any[]=[];
+  PREN_ID: any;
+cargando = false;
+modalIn = false;
+mensaje_alerta: string;
+mostrar_alerta: boolean = false;
+tipo_alerta :string;
+filtroTexto:string = '';
+    currentPage = 1;
+    itemsPerPage = 50;
+
+  prendaForm : FormGroup = this.formBuilder.group({
+    nombre: ['', [Validators.required, Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(50)]],
+    marca: ['', [Validators.required, Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(50)]],
+});
+
+
   constructor(
     private prendaService:PrendaService,
     private categoriaService:CategoriaService,
     private formBuilder: FormBuilder,
     public modal: NgbModal,
+    private storageService:StorageService,
     configModal: NgbModalConfig)
     { 
       configModal.backdrop = 'static';
       configModal.keyboard = false;
     }
 
-    prendas:any[]=[];
-    prendas_iniciales: any[] = [];
-    categorias_iniciales: any[]=[];
-    categorias: any[]=[];
-  cargando = false;
-  modalIn = false;
-  mensaje_alerta: string;
-  mostrar_alerta: boolean = false;
-  tipo_alerta :string;
+   
+  @ViewChild('createPrendaModal') createPrendaModal: ElementRef;
+
   ngOnInit(): void {
     this.listarPrendas()
-
-    
+    this.PREN_ID = this.storageService.getString('PREN_ID');
   }
   openCentrado(contenido: any) {
     this.modal.open(contenido, { centered: true });
   }
 
+  inicializarFormulario(){
+    this.prendaForm.reset();
+    }
 
+  get nombre() {
+    return this.prendaForm.get('nombre');
+  }
+  get marca() {
+    return this.prendaForm.get('marca');
+  }
 
   listarProductos(id_cat:number){
     this.cargando = true;
@@ -119,6 +142,12 @@ export class PrendaComponent implements OnInit {
       }
     }
     );
+  }
+
+  registerPrendaModal(){
+    this.mostrar_alerta = false;
+    this.inicializarFormulario();
+    this.modal.open(this.createPrendaModal);
   }
 
 }
