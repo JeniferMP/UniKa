@@ -299,9 +299,7 @@ export class UsuarioComponent implements OnInit {
     this.email!.setValue(usuario.USU_EMAIL);
     this.nombres!.setValue(usuario.USU_NOMBRES);
     this.contrasena!.setValue('');
-    // console.log(this.datePipe.transform(usuario.USU_FECHA_NACIMIENTO, 'yyyy-MM-dd'));
-    console.log(usuario.USU_FECHA_NACIMIENTO);
-    this.fecha_nacimiento!.setValue("");
+    this.fecha_nacimiento!.setValue(this.getFechaNacimiento(usuario.USU_FECHA_NACIMIENTO));
     console.log(this.fecha_nacimiento!.value);
     this.direccion!.setValue(usuario.USU_DIRECCION);
     this.apellido_paterno!.setValue(usuario.USU_APELLIDO_PATERNO);
@@ -412,6 +410,10 @@ export class UsuarioComponent implements OnInit {
     const fechaMaxima = anio + '-' + mes + '-' + dia;
 
     return new Date(fechaMaxima).toISOString().split('T')[0] ;
+  }
+  getFechaNacimiento(fecha:string): any {
+    const fechaFormateada=fecha.substring(0,10);
+    return fechaFormateada ;
   }
   cambiarDeStyleDate() {
     this.opacarDateFechaNacimiento = false;
