@@ -45,7 +45,6 @@ export class UsuarioComponent implements OnInit {
     public modal: NgbModal,
     public configModal: NgbModalConfig,
     private usuarioService: UsuarioService,
-    //private datePipe: DatePipe,
     private storageService:StorageService,
     private rolService: RolService) {
       configModal.backdrop = 'static';
@@ -300,8 +299,9 @@ export class UsuarioComponent implements OnInit {
     this.email!.setValue(usuario.USU_EMAIL);
     this.nombres!.setValue(usuario.USU_NOMBRES);
     this.contrasena!.setValue('');
+    // console.log(this.datePipe.transform(usuario.USU_FECHA_NACIMIENTO, 'yyyy-MM-dd'));
     console.log(usuario.USU_FECHA_NACIMIENTO);
-    this.fecha_nacimiento!.setValue('');
+    this.fecha_nacimiento!.setValue("");
     console.log(this.fecha_nacimiento!.value);
     this.direccion!.setValue(usuario.USU_DIRECCION);
     this.apellido_paterno!.setValue(usuario.USU_APELLIDO_PATERNO);
@@ -309,10 +309,12 @@ export class UsuarioComponent implements OnInit {
     this.celular!.setValue(usuario.USU_CELULAR);
     this.dni!.setValue(usuario.USU_DNI);
     this.rol!.setValue(usuario.ROL_ID);
-
+    console.log(usuario.USU_SEXO)
     if(usuario.USU_SEXO == 'M'){
       this.sexo_!.setValue(1);
-    }else if(usuario.USU_SEXO == 'F') this.sexo_!.setValue(0);
+    }else if(usuario.USU_SEXO == 'F'){
+      this.sexo_!.setValue(0);
+    } 
     this.modal.open(this.editUserModal);
   }
 
@@ -325,7 +327,12 @@ export class UsuarioComponent implements OnInit {
     this.usuar_editar.USU_APELLIDO_MATERNO = this.apellido_materno!.value;
     this.usuar_editar.USU_USUARIO = this.user!.value;
     this.usuar_editar.USU_EMAIL = this.email!.value;
-    this.usuar_editar.USU_SEXO = this.sexo;
+    console.log(this.sexo_!.value)
+    if( this.sexo_!.value==1){
+      this.usuar_editar.USU_SEXO = "M";
+    }else if( this.sexo_!.value==0){
+      this.usuar_editar.USU_SEXO = "F";
+    } 
     this.usuar_editar.USU_CELULAR = this.celular!.value;
     this.usuar_editar.USU_DIRECCION = this.direccion!.value;
     this.usuar_editar.USU_FECHA_NACIMIENTO = this.fecha_nacimiento!.value;
