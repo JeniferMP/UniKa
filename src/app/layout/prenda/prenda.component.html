@@ -199,23 +199,12 @@
                                 <input type="text" disabled value="{{prendaSeleccionada.PREN_MARCA}}" id="inputMarca" class="border-left-primary font-tamanio form-control">
                             </div>
                         </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <!-- <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputUser" >Usuario</label>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputPrecio">Precio</label>
                             <div>
-                                <input type="text" id="inputUser" disabled value="{{userSelected.USU_USUARIO}}" class="border-left-primary font-tamanio form-control">
+                                <input type="text" disabled value="{{prendaSeleccionada.PREN_PRECIO}}" id="inputPrecio" class="border-left-primary font-tamanio form-control">
                             </div>
-                        </div> -->
-                        <!-- <div class="my-2 col-sm-11 col-md-11 col-lg-6">
-                            <label for="inputContraseña">Contraseña:</label>
-                            <div class="p-0 col-sm-8 col-md-12 col-lg-12 d-flex">
-                                <input disabled id="inputContraseña" type={{PASSWORD_CURRENT_TYPE}} id="inputContrasenia" value="{{userSelected.USU_CONTRASENIA}}" class="border-left-primary font-tamanio form-control" >
-                                <button style="border-style:none" (click)="cambiarVistaContrasena()">
-                                    <i  class={{PASSWORD_CURRENT_ICON}} aria-hidden="true" ></i>
-                                </button>
-                            </div>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="my-2 col-sm-12 col-md-12 col-lg-6">
@@ -242,7 +231,7 @@
 
 <ng-template #editPrendaModal let-d="dismiss">
     <div class="modal-header justify-content-center">
-        <h4 class="modal-title">Registrar Prenda</h4>
+        <h4 class="modal-title">Actualizar Prenda</h4>
     </div>
     <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
     <!-- <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert> -->
