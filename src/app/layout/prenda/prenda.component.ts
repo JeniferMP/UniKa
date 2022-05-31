@@ -31,7 +31,8 @@ export class PrendaComponent implements OnInit {
   IdPrenda : number = 0;
 
   prendaForm : FormGroup = this.formBuilder.group({
-    codigo: ['', [Validators.required , Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(20)]],
+    codigo: ['', [Validators.required , Validators.pattern('^[^$%&|<>#]*$'), Validators.maxLength(20)]],
+    //[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+  
     nombre: ['',[Validators.required, Validators.maxLength(60)]],
     marca: ['',[Validators.required, Validators.maxLength(20)]],
     precio: ['',[Validators.required, Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$') ,Validators.maxLength(60)]],
