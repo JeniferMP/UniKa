@@ -211,7 +211,19 @@ export class PrendaComponent implements OnInit {
           if (error['error']['error'] !== undefined) {
             if (error['error']['error'] === 'error_deBD') {
               this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página o inténtelo más tarde.';
-            } 
+            }
+            if (error['error']['error'] === 'error_ejecucionQuery') {
+              this.mensaje_alerta = 'Hubo un error al registrar la prenda. Por favor, actualice la página o inténtelo más tarde.';
+            }
+            else if (error['error']['error'] === 'error_exitenciaCategoriaId') {
+              this.mensaje_alerta = 'El id de la categoria no existe.';
+            }
+            else if (error['error']['error'] === 'error_existenciaPrendaCodigo') {
+              this.mensaje_alerta ='La prenda con código '+this.nuevaPrenda.PREN_CODIGO+' ya está registrada.';
+            }
+            else if (error['error']['error'] === 'error_existenciaPrendaNombre') {
+              this.mensaje_alerta ='La prenda '+this.nuevaPrenda.PREN_NOMBRE+' ya está registrada.';
+            }
           }
           else{
             this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página o inténtelo más tarde.';
@@ -269,9 +281,15 @@ export class PrendaComponent implements OnInit {
         this.mostrar_alerta = true;
         this.tipo_alerta='danger';
         if (error['error']['error'] !== undefined) {
-          if (error['error']['error'] === 'error_deBD') {
-            this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página o inténtelo más tarde.';
-          } 
+          if (error['error']['error'] === 'error_ejecucionQuery') {
+            this.mensaje_alerta = 'Hubo un error al actualizar la prenda. Por favor, actualice la página o inténtelo más tarde.';
+          }
+          else if(error['error']['error'] === 'error_exitenciaCategoriaId') {
+            this.mensaje_alerta = 'La categoría no existe.';
+          }
+          else if(error['error']['error'] === 'error_exitenciaId') {
+            this.mensaje_alerta = 'La prenda no existe';
+          }
         }
         else{
           this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página o inténtelo más tarde.';

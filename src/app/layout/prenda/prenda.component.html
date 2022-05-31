@@ -8,7 +8,7 @@
                       <div class="py-1 col-sm-12 col-md-5 col-lg-4">
                           <div class="row">
                               <div class="col">
-                                  <!-- <input type="text" class="border-left-primary font-tamanio form-control" [(ngModel)]="filtroTexto"  name="filtroTexto" placeholder="Buscar..." > -->
+                                  <input type="text" class="border-left-primary font-tamanio form-control" [(ngModel)]="filtroTexto"  name="filtroTexto" placeholder="Buscar..." >
                               </div>
                           </div>
                       </div>
@@ -31,10 +31,10 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <!-- <tr *ngFor="let prenda of prendas |filterUserByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  "> -->
-                              <tr *ngFor="let prenda of prendas; let i = index  ">
-                                  <td class="" >{{prenda.PREN_CODIGO}}</td>
-                                  <td class="" >{{prenda.PREN_NOMBRE}}</td>
+                              <tr *ngFor="let prenda of prendas |filterPrendaByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  ">
+                              <!-- <tr *ngFor="let prenda of prendas; let i = index  "> -->
+                                  <td class="" class="" >{{prenda.PREN_CODIGO}}</td>
+                                  <td class="" class="" >{{prenda.PREN_NOMBRE}}</td>
                                   <td class="" >{{prenda.PREN_MARCA}}</td> 
                                   <td class="" >{{prenda.PREN_PRECIO}}</td>
                                   <td class="" >{{prenda.CAT_NOMBRE}}</td>
@@ -89,7 +89,7 @@
       <h4 class="modal-title">Registrar Prenda</h4>
   </div>
   <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
-  <!-- <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert> -->
+  <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
   <div class="modal-body">
       <form [formGroup]="prendaForm">
           <div class="form-group">
@@ -234,7 +234,7 @@
         <h4 class="modal-title">Actualizar Prenda</h4>
     </div>
     <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
-    <!-- <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert> -->
+    <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
     <div class="modal-body">
         <form [formGroup]="prendaForm">
             <div class="form-group">
