@@ -6,6 +6,7 @@ import { LayoutRoutingModule } from './layout/layout-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 import {UsuarioComponent} from './layout/usuario/usuario.component';
 import { PrendaComponent } from './layout/prenda/prenda.component';
+import { ProveedorComponent } from './layout/proveedor/proveedor.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'layout', component: LayoutComponent},
   {path: 'usuario',component:UsuarioComponent},
   {path: 'prenda',component:PrendaComponent},
+  {path: 'proveedor',component:ProveedorComponent},
   {path:'',redirectTo:'',pathMatch:'full'},
   {path:'**',redirectTo:''},
   //{path:'not-found',component:NotfoundComponent}

@@ -1,1 +1,85 @@
-<p>proveedor works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-11">
+            <div class="card mb-4" >
+                <div class="card-header pb-0 row justify-content-between">
+                        <div class="py-1 col-sm-12 col-md-5 col-lg-4">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="border-left-primary font-tamanio form-control" [(ngModel)]="filtroTexto"  name="filtroTexto" placeholder="Buscar..." >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-1 col-sm-12 col-md-4 col-lg-3" >
+                            <button  (click)="registerProveedorModal()" style="float:right" type="button" class="boton btn btn-primary ">Nuevo proveedor</button>
+                        </div>                
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Codigo</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombres</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Apellidos</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Razon Social</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Celular</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Direccion</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let proveedor of proveedores |filterUserByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  ">
+                                    <td class=""   class="" >{{proveedor.PROV_ID}}</td>
+                                    <td class=""   class="" >{{proveedor.PROV_NOMBRE}}</td>
+                                    <td class="">{{proveedor.PROV_APELLIDOS}}</td> 
+                                    <td class="" >{{proveedor.PROV_RAZON_SOCIAL}}</td>
+                                    <td class="" >{{proveedor.PROV_NUM_CONTACT}}</td>
+                                    <td class="" >{{proveedor.PROV_DIRECCION}}</td>
+                                    <td *ngIf="proveedor.PROV_ID != PROV_ID">{{proveedor.PROV_ESTADO==1?'Activo':'Inactivo'}}</td>
+                                    <div class="row btnes">
+                                        <!-- <div class="button-table"  *ngIf="usuario.USU_ESTADO != 1 && usuario.USU_ESTADO !=2; else Habilitar">
+                                            <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)" class="btn btn-success btn-circle btn-sm " ngbTooltip="Habilitar">
+                                                <i class="fas fa-check" aria-hidden="true"></i>
+                                            </span>
+                                        </div> -->
+                                        <!-- <ng-template #Habilitar>
+                                            <div class=" button-table">
+                                                <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)"  class="btn btn-danger btn-circle btn-sm "ngbTooltip="Deshabilitar">
+                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </ng-template> -->
+                                        <!-- <div class="col-1 button-table">
+                                            <span   (click)="seeMore(proveedor)" class="btn btn-primary btn-circle btn-sm" ngbTooltip="Ver Más" >
+                                                <i class="fas fa-eye" aria-hidden="true"   ></i>
+                                            </span>
+                                        </div>
+                                        <div class="col-1 button-table btn-edit">
+                                            <button (click)="editUser(proveedor)" class="btn btn-warning btn-circle btn-sm" ngbTooltip="Editar" >
+                                                <i style="color: white;" class="far fa-edit" aria-hidden="true"   ></i>
+                                            </button>
+                                        </div> -->
+                                    </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div *ngIf="proveedores.length>0" class="row box-footer clearfix mt-3">
+                    <div class="col-xl-10 col-lg-9 col-md-7 col-sm-7 col-6">
+                    <ngb-pagination *ngIf="proveedores.length>5" class="d-flex justify-content-start" size="sm" [maxSize]="5" [pageSize]="itemsPerPage"  [collectionSize]="proveedores.length" [(page)]="currentPage"></ngb-pagination>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-5 col-sm-5 col-6">
+                    <select class="pull-right" [(ngModel)]="itemsPerPage" class="form-control form-control-sm custom-select">
+                        <option value="50">50 elementos</option>                 
+                        <option value="100">100 elementos</option>                  
+                        <option value="200">200 elementos</option>                   
+                    </select>  
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+
