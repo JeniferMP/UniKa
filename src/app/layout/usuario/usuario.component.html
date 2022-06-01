@@ -39,18 +39,18 @@
                                     <td class="" >{{usuario.ROL_ID==1?'Empleado':'Administrador'}}</td>
                                     <td *ngIf="usuario.USU_ID != USU_ID">{{usuario.USU_ESTADO==1?'Activo':'Inactivo'}}</td>
                                     <div class="row btnes">
-                                        <!-- <div class="button-table"  *ngIf="usuario.USU_ESTADO != 1 && usuario.USU_ESTADO !=2; else Habilitar">
+                                        <div class="col-1 button-table"  *ngIf="usuario.USU_ESTADO != 1 && usuario.USU_ESTADO !=2; else Habilitar">
                                             <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)" class="btn btn-success btn-circle btn-sm " ngbTooltip="Habilitar">
                                                 <i class="fas fa-check" aria-hidden="true"></i>
                                             </span>
-                                        </div> -->
-                                        <!-- <ng-template #Habilitar>
-                                            <div class=" button-table">
+                                        </div>
+                                        <ng-template #Habilitar>
+                                            <div class="col-1 button-table">
                                                 <span (click)="habilitarInhabilitarUsuario(usuario.USU_ID,usuario.USU_ESTADO)"  class="btn btn-danger btn-circle btn-sm "ngbTooltip="Deshabilitar">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
                                                 </span>
                                             </div>
-                                        </ng-template> -->
+                                        </ng-template>
                                         <div class="col-1 button-table">
                                             <span   (click)="seeMore(usuario)" class="btn btn-primary btn-circle btn-sm" ngbTooltip="Ver Más" >
                                                 <i class="fas fa-eye" aria-hidden="true"   ></i>

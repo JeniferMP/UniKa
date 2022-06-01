@@ -267,10 +267,10 @@ export class UsuarioComponent implements OnInit {
     }
     
     this.usuarioService.habilitarInhabilitarUsuarios(USU_ID,USU_ESTADO).subscribe(data=>
-      {
-        this.listarUsuario();
+      { 
         this.tipo_alerta = 'success';
         this.mostrar_alerta = true; 
+        this.listarUsuario();
       },error=>{
         this.cargando = false;
         this.mostrar_alerta = true;
