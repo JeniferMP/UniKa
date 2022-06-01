@@ -25,10 +25,10 @@ export class ProveedorComponent implements OnInit {
   tipo_alerta: string;
 
   proveedorForm : FormGroup = this.formBuilder.group({
-    nombres: ['', [Validators.required, Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(50)]],
+    nombre: ['', [Validators.required, Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(50)]],
     apellidos: ['', [Validators.required, Validators.pattern('^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$'), Validators.maxLength(30)]],
     razonSocial: ['', [Validators.required, Validators.pattern('^[a-zñáéíóúA-ZÑÁÉÍÓÚ ]+$'), Validators.maxLength(30)]],
-    telefono: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(9), Validators.minLength(9)]] ,
+    celular: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(9), Validators.minLength(9)]] ,
     direccion: ['', [Validators.required , Validators.pattern('^[a-zñáéíóú#°/,. A-ZÑÁÉÍÓÚ  0-9]+$'), Validators.maxLength(100)]],
   });
 
@@ -175,7 +175,7 @@ export class ProveedorComponent implements OnInit {
     this.nombre!.setValue(provedor.PROV_NOMBRE);
     this.apellidos!.setValue(provedor.PROV_APELLIDOS);
     this.razonSocial!.setValue(provedor.PROV_RAZON_SOCIAL);
-    // this.celular!.setValue(provedor.PROV_NUM_CONTACT);
+    this.celular!.setValue(provedor.PROV_NUM_CONTACT);
     this.direccion!.setValue(provedor.PROV_DIRECCION);
     this.modal.open(this.editProveedorModal);
   }

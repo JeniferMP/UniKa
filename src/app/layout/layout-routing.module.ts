@@ -5,6 +5,7 @@ import { DahsboardComponent} from './dahsboard/dahsboard.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { PrendaComponent } from './prenda/prenda.component';
+import { ProveedorComponent } from './proveedor/proveedor.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,8 @@ const routes: Routes = [
       {path:'dashboard',component:DahsboardComponent},
       {path:'usuarios',component:UsuarioComponent},
       {path:'categorias',component:CategoriaComponent},
-      {path:'prendas',component:PrendaComponent}
+      {path:'prendas',component:PrendaComponent},
+      {path:'proveedor',component:ProveedorComponent}
     ]
   }
 ];
