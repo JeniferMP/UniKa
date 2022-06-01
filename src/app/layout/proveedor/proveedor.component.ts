@@ -227,6 +227,16 @@ export class ProveedorComponent implements OnInit {
     this.modal.open(this.seeMoreModal);
   }
 
+  searchProveedores(){
+    if(this.proveedores.length<0){
+      this.mensaje_alerta = 'No existen usuarios registrados, registre uno y vuelva a intentarlo.';
+      this.tipo_alerta = 'danger';
+      this.mostrar_alerta = true;
+      return;
+    }else{
+      //Realizar búsqueda de usuario
+    }
+  }
 
 
   @ViewChildren(SorteableDirective) headers: QueryList<SorteableDirective>;

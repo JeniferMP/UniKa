@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let proveedor of proveedores |slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  ">
+                                <tr *ngFor="let proveedor of proveedores |filterProveedorByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  ">
                                     <td class=""   class="" >{{proveedor.PROV_ID}}</td>
                                     <td class=""   class="" >{{proveedor.PROV_NOMBRE}}</td>
                                     <td class="">{{proveedor.PROV_APELLIDOS}}</td> 
