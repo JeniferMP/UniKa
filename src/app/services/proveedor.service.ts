@@ -14,14 +14,13 @@ export class ProveedorService {
 constructor(private http:HttpClient, private storage: StorageService) { }
 
 listarProveedor(): Observable<any>{
-    const url= environment.domain_url+ '/api/proveedor/listarProveedor.php';
+    const url= environment.domain_url+'/api/proveedor/listarProveedor.php';
     return this.http.get<any>(url).pipe(retry(2));
 }
 
 registerProveedor(proveedor:Proveedor):Observable<any>{
   const url = environment.domain_url + '/api/proveedor/registrarProveedor.php';
-  const datos = {
-    
+  const datos = { 
     PROV_NOMBRE : proveedor.PROV_NOMBRE,
     PROV_APELLIDOS : proveedor.PROV_APELLIDOS,
     PROV_RAZON_SOCIAL : proveedor.PROV_RAZON_SOCIAL,
@@ -33,4 +32,17 @@ registerProveedor(proveedor:Proveedor):Observable<any>{
   return this.http.post<any>(url,datos).pipe(retry(1));
 }
 
+updateProveedor(proveedor:Proveedor):Observable<any>{
+  const url = environment.domain_url + '/api/proveedor/editarProveedor.php';
+  const datos = {
+    PROV_ID: proveedor.PROV_ID,
+    PROV_NOMBRE : proveedor.PROV_NOMBRE,
+    PROV_APELLIDOS : proveedor.PROV_APELLIDOS,
+    PROV_RAZON_SOCIAL : proveedor.PROV_RAZON_SOCIAL,
+    PROV_NUM_CONTACT : proveedor.PROV_NUM_CONTACT,
+    PROV_DIRECCION : proveedor.PROV_DIRECCION,
+    PROV_ESTADO : proveedor.PROV_ESTADO, //Habilitado(1) / Deshabilitado(0) / Cambio de contraseña (2) 
+  }
+  return this.http.put<any>(url,datos).pipe(retry(2));
+}
 }
