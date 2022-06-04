@@ -13,6 +13,7 @@ import { PrendaComponent } from './prenda/prenda.component';
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { DirectivesModule } from '../shared/directives/directives.module';
 import { ProveedorComponent } from './proveedor/proveedor.component';
+import { CompraComponent } from './compra/compra.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ProveedorComponent } from './proveedor/proveedor.component';
     DahsboardComponent,
     CategoriaComponent,
     PrendaComponent,
-    ProveedorComponent
+    ProveedorComponent,
+    CompraComponent
 
   ],
   imports: [
