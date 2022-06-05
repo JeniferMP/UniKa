@@ -17,6 +17,11 @@ export class CompraService {
     return this.http.get<any>(url).pipe(retry(2));
   }
 
+  listarDetalleCompras(compraId:number): Observable<any>{
+    const url= environment.domain_url+  `/api/detallecompra/listarDetallesCompra.php?COMPRA_ID=${compraId} `;
+    return this.http.get<any>(url).pipe(retry(2));
+  }
+
 //   registerUser(usuario:Usuario):Observable<any>{
 //     const url = environment.domain_url + '/api/usuarios/registrarUsuario.php';
 //     const datos = {

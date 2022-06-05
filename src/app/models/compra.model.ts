@@ -5,4 +5,7 @@ export class Compra{
     USU_ID: number;
     COMPROBANTE_ID: number;
     PROV_ID : number;
+    PROV_RAZON_SOCIAL: string;
+    USU_NOMBRE_COMPLETO: string;
+    COMPROBANTE_TIPO: string;
 }

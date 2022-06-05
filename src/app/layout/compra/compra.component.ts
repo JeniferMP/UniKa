@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CompraService } from 'src/app/services/compra.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { Compra } from 'src/app/models/compra.model';
+import { DetalleCompra } from 'src/app/models/detalleCompra.model';
 
 @Component({
   selector: 'app-compra',
@@ -15,9 +16,11 @@ export class CompraComponent implements OnInit {
   COMPRA_ID: any;
   comprasObtenidas: any[]=[];
   compras: Compra []=[];
+  comprasDetalleObtenidas: any[]=[];
+  comprasDetalle: DetalleCompra []=[];
 
   compraForm : FormGroup = this.formBuilder.group({
-    // user:['',[Validators.required, Validators.maxLength(60)]],
+    numComprobante:['',[Validators.required, Validators.maxLength(60)]],
     // email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/), Validators.maxLength(60)]],
     // contrasena: ['', [Validators.minLength(8), Validators.maxLength(20)]],
     // nombres: ['', [Validators.required, Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(50)]],
@@ -44,7 +47,7 @@ export class CompraComponent implements OnInit {
     configModal.size='lg'
   }
   filtroTexto:string = '';
-  userSelected = new Compra(); 
+  compraSeleccionada = new Compra(); 
   newCompra = new Compra();
   currentPage = 1;
   itemsPerPage = 50;
@@ -55,6 +58,10 @@ export class CompraComponent implements OnInit {
   mensaje_alerta: string;
   mostrar_alerta: boolean = false;
   tipo_alerta: string;
+
+  @ViewChild('seeDetalle') seeDetalle: ElementRef; 
+
+  @ViewChild('agregarCompraModal') agregarCompraModal: ElementRef;
 
   ngOnInit(): void {
     this.inicializarFormulario();
@@ -88,5 +95,46 @@ export class CompraComponent implements OnInit {
         }
       }
     )
+  }
+
+  listarDetalleCompras(compraId:number){
+    this.cargando=true;
+    this.mostrar_alerta=false;
+    this.compraService.listarDetalleCompras(compraId).subscribe(
+      data=>{
+        this.comprasDetalleObtenidas = data.resultado;
+        this.comprasDetalle = this.comprasDetalleObtenidas.slice();
+        this.cargando = false;
+      },
+      error=>{
+        this.cargando = false;
+        this.mostrar_alerta = true;
+        this.tipo_alerta='danger';
+        if (error['error']['error'] !== undefined) {
+          if (error['error']['error'] === 'error_deBD') {
+            this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página.';
+          }
+        }
+        else{
+          this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página.';
+        }
+      }
+    )
+  }
+  seeMore(compra:Compra){
+    this.compraSeleccionada = compra;
+    this.mostrar_alerta = false;
+    this.modal.open(this.seeDetalle);
+    this.listarDetalleCompras(compra.COMPRA_ID);
+  }
+
+  closeModal(): any {
+    this.modal.dismissAll();
+  }
+
+  agregarCompra(){
+    this.mostrar_alerta = false;
+    this.inicializarFormulario();
+    this.modal.open(this.agregarCompraModal);
   }
 }
