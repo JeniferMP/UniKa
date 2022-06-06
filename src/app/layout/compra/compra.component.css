@@ -101,3 +101,9 @@
     flex: 0 0 50%;
     max-width: 30%;
   }
+tbody, td, tfoot, th, thead, tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    text-align: center;
+  }

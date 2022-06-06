@@ -15,4 +15,5 @@ export class DetalleCompra {
    TALLA_ID: number;
    DET_PREN_COLOR: string;
    DET_PREN_STOCK: number;
+   TALLA_NOMBRE: string;
 }

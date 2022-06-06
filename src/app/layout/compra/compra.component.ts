@@ -5,6 +5,8 @@ import { CompraService } from 'src/app/services/compra.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { Compra } from 'src/app/models/compra.model';
 import { DetalleCompra } from 'src/app/models/detalleCompra.model';
+import { Proveedor } from 'src/app/models/proveedor.model';
+import { ProveedorService } from 'src/app/services/proveedor.service';
 
 @Component({
   selector: 'app-compra',
@@ -15,12 +17,18 @@ export class CompraComponent implements OnInit {
 
   COMPRA_ID: any;
   comprasObtenidas: any[]=[];
+  proveedoresObtenidos: any[]=[];
   compras: Compra []=[];
+  proveedores: Proveedor []=[];
   comprasDetalleObtenidas: any[]=[];
   comprasDetalle: DetalleCompra []=[];
+  comprasDetalleCreadas: DetalleCompra []=[];
+  compraDetalleCreada= new DetalleCompra() ;
 
   compraForm : FormGroup = this.formBuilder.group({
     numComprobante:['',[Validators.required, Validators.maxLength(60)]],
+    tipoComprobante:['',[Validators.required]],
+    proveedor:['',[Validators.required]],
     // email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/), Validators.maxLength(60)]],
     // contrasena: ['', [Validators.minLength(8), Validators.maxLength(20)]],
     // nombres: ['', [Validators.required, Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(50)]],
@@ -34,13 +42,20 @@ export class CompraComponent implements OnInit {
     // sexo:['']
   });
 
+  compraDetalleForm : FormGroup = this.formBuilder.group({
+    numComprobante:['',[Validators.required, Validators.maxLength(60)]],
+    tipoComprobante:['',[Validators.required]],
+    proveedor:['',[Validators.required]],
+  });
+
 
   constructor(
     private formBuilder: FormBuilder,
     public modal: NgbModal,
     public configModal: NgbModalConfig,
     private compraService: CompraService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private proveedorService: ProveedorService
   ) { 
     configModal.backdrop = 'static';
     configModal.keyboard = false;
@@ -63,6 +78,8 @@ export class CompraComponent implements OnInit {
 
   @ViewChild('agregarCompraModal') agregarCompraModal: ElementRef;
 
+  @ViewChild('agregarDetalleModal') agregarDetalleModal: ElementRef;
+
   ngOnInit(): void {
     this.inicializarFormulario();
     this.listarCompras();
@@ -71,6 +88,20 @@ export class CompraComponent implements OnInit {
 
   inicializarFormulario(){
     this.compraForm.reset();
+    }
+  
+  inicializarFormularioDetalle(){
+      this.compraDetalleForm.reset();
+    }
+
+    get numComprobante() {
+      return this.compraForm.get('numComprobante');
+    }
+    get tipoComprobante() {
+      return this.compraForm.get('tipoComprobante');
+    }
+    get proveedor() {
+      return this.compraForm.get('proveedor');
     }
   listarCompras(){
     this.cargando=true;
@@ -135,6 +166,38 @@ export class CompraComponent implements OnInit {
   agregarCompra(){
     this.mostrar_alerta = false;
     this.inicializarFormulario();
+    this.listarProveedor();
     this.modal.open(this.agregarCompraModal);
+  }
+
+  agregarDetalleCompra(){
+    this.mostrar_alerta = false;
+    this.inicializarFormularioDetalle();
+    this.modal.open(this.agregarDetalleModal);
+  }
+
+  listarProveedor(){
+    this.cargando=true;
+    this.mostrar_alerta=false;
+    this.proveedorService.listarProveedor().subscribe(
+      data=>{
+        this.proveedoresObtenidos = data.resultado;
+        this.proveedores = this.proveedoresObtenidos.slice();
+        this.cargando = false;
+      },
+      error=>{
+        this.cargando = false;
+        this.mostrar_alerta = true;
+        this.tipo_alerta='danger';
+        if (error['error']['error'] !== undefined) {
+          if (error['error']['error'] === 'error_deBD') {
+            this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página.';
+          }
+        }
+        else{
+          this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página.';
+        }
+      }
+    )
   }
 }
