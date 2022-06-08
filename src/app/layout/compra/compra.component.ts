@@ -185,7 +185,7 @@ export class CompraComponent implements OnInit {
     this.mostrar_alerta = false;
     this.inicializarFormulario();
     this.listarProveedor();
-    this.comprasDetalleCreadas=[]
+    this.comprasDetalleCreadas=[];
     this.modal.open(this.agregarCompraModal);
   }
 
