@@ -6,7 +6,9 @@ import { StorageService } from 'src/app/services/storage.service';
 import { Compra } from 'src/app/models/compra.model';
 import { DetalleCompra } from 'src/app/models/detalleCompra.model';
 import { Proveedor } from 'src/app/models/proveedor.model';
+import { Prenda } from 'src/app/models/prenda.model';
 import { ProveedorService } from 'src/app/services/proveedor.service';
+import { PrendaService } from 'src/app/services/prenda.service';
 
 @Component({
   selector: 'app-compra',
@@ -22,13 +24,18 @@ export class CompraComponent implements OnInit {
   proveedores: Proveedor []=[];
   comprasDetalleObtenidas: any[]=[];
   comprasDetalle: DetalleCompra []=[];
+  prendas_iniciales: any[]=[];
+  prendas: Prenda []=[];
   comprasDetalleCreadas: DetalleCompra []=[];
-  compraDetalleCreada= new DetalleCompra() ;
+  compraDetalleCreada= new DetalleCompra();
+  prendaObtenida= new Prenda();
+  prendaDetalle= new Prenda();
 
   compraForm : FormGroup = this.formBuilder.group({
     numComprobante:['',[Validators.required, Validators.maxLength(60)]],
     tipoComprobante:['',[Validators.required]],
     proveedor:['',[Validators.required]],
+    
     // email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/), Validators.maxLength(60)]],
     // contrasena: ['', [Validators.minLength(8), Validators.maxLength(20)]],
     // nombres: ['', [Validators.required, Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(50)]],
@@ -43,9 +50,9 @@ export class CompraComponent implements OnInit {
   });
 
   compraDetalleForm : FormGroup = this.formBuilder.group({
-    numComprobante:['',[Validators.required, Validators.maxLength(60)]],
-    tipoComprobante:['',[Validators.required]],
-    proveedor:['',[Validators.required]],
+    prenda:['',[Validators.required]],
+    precio: ['',[Validators.required]],
+    cantidad: ['',[Validators.required]],
   });
 
 
@@ -55,7 +62,8 @@ export class CompraComponent implements OnInit {
     public configModal: NgbModalConfig,
     private compraService: CompraService,
     private storageService: StorageService,
-    private proveedorService: ProveedorService
+    private proveedorService: ProveedorService,
+    private prendaService: PrendaService
   ) { 
     configModal.backdrop = 'static';
     configModal.keyboard = false;
@@ -102,6 +110,15 @@ export class CompraComponent implements OnInit {
     }
     get proveedor() {
       return this.compraForm.get('proveedor');
+    }
+    get prenda() {
+      return this.compraDetalleForm.get('prenda');
+    }
+    get precio() {
+      return this.compraDetalleForm.get('precio');
+    }
+    get cantidad() {
+      return this.compraDetalleForm.get('cantidad');
     }
   listarCompras(){
     this.cargando=true;
@@ -161,18 +178,21 @@ export class CompraComponent implements OnInit {
 
   closeModal(): any {
     this.modal.dismissAll();
+    this.comprasDetalle=[];
   }
 
   agregarCompra(){
     this.mostrar_alerta = false;
     this.inicializarFormulario();
     this.listarProveedor();
+    this.comprasDetalleCreadas=[]
     this.modal.open(this.agregarCompraModal);
   }
 
   agregarDetalleCompra(){
     this.mostrar_alerta = false;
     this.inicializarFormularioDetalle();
+    this.listarPrendas();
     this.modal.open(this.agregarDetalleModal);
   }
 
@@ -200,4 +220,45 @@ export class CompraComponent implements OnInit {
       }
     )
   }
+  listarPrendas(){
+    this.cargando = true;
+    this.modalIn = false;
+    this.prendaService.listarPrendas().subscribe(
+      (data)=>{
+        this.prendas_iniciales = data['resultado'];
+        this.prendas = this.prendas_iniciales.slice();
+        console.log(this.prendas)
+        this.cargando = false;
+      },
+      (error) =>{
+        this.cargando = false;
+        this.mostrar_alerta = true;
+        this.tipo_alerta='danger';
+        this.modalIn = false;
+        if (error['error']['error'] !== undefined) {
+          if (error['error']['error'] === 'error_deBD') {
+            this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página.';
+          }
+        }
+        else{
+          this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página.';
+        }
+      }
+    ); 
+  }
+  agregarDetalle(){
+    console.log("Agregar Detalle")
+    this.modalIn=true
+    this.compraDetalleCreada.PREN_ID=this.prenda!.value;
+    console.log(this.prenda!.value)
+    this.compraDetalleCreada.DET_COMPRA_CANTIDAD=this.cantidad!.value;
+    console.log(this.compraDetalleCreada.DET_COMPRA_CANTIDAD)
+    this.compraDetalleCreada.DET_COMPRA_PRECIO=this.precio!.value;
+    this.prendaDetalle=this.prendas.filter(prenda => prenda.PREN_ID == this.prenda!.value)[0];
+    this.compraDetalleCreada.PREN_NOMBRE=this.prendaDetalle.PREN_NOMBRE
+    this.compraDetalleCreada.PREN_CODIGO=this.prendaDetalle.PREN_CODIGO
+    this.comprasDetalleCreadas.push(this.compraDetalleCreada);
+    console.log(this.comprasDetalleCreadas)
+  }
+
 }

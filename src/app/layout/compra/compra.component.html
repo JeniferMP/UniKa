@@ -140,7 +140,7 @@
                             </thead>
                             <tbody>
                                 <!-- <tr *ngFor="let compra of compras |filterUserByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  "> -->
-                                <tr *ngFor="let compraDetalle of comprasDetalle ; let i = index  ">
+                                <tr *ngFor="let compraDetalle of comprasDetalleCreadas ; let i = index  ">
                                     <td class=""   class="" >{{compraDetalle.PREN_CODIGO}}</td>
                                     <td class=""   class="" >{{compraDetalle.PREN_NOMBRE}}</td>
                                     <td class=""   class="" >{{compraDetalle.PREN_MARCA}}</td>
@@ -176,29 +176,28 @@
     <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
     <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
     <div class="modal-body">
-        <form [formGroup]="compraForm">
+        <form [formGroup]="compraDetalleForm">
             <div class="form-group">
                 <div class="row justify-content-center">
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                        <label class="mr-sm-2" for="inputTipoComprobante">Tipo Comprobante</label>
-                        <select  formControlName="tipoComprobante" id="inputTipoComprobante" class="border-left-primary form-select mr-sm-2" >
+                        <label class="mr-sm-2" for="inputPrenda">Prenda</label>
+                        <select  formControlName="prenda" id="inputPrenda" class="border-left-primary form-select mr-sm-2" >
                             <option hidden value="" disabled>Escoge una opción</option>
-                            <!-- <option [value]="1" *ngFor="let tipo of tipos">BOLETA</option> -->
-                            <option [value]="1" >BOLETA</option>
-                            <option [value]="2" >FACTURA</option>
-                            <!-- <option [value]="2" *ngFor="let tipo of tipos">FACTURA</option> -->
-                            <div *ngIf="tipoComprobante!.invalid && (tipoComprobante!.dirty || tipoComprobante!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
-                                <div *ngIf="tipoComprobante!.errors!.required">
-                                    * El Tipo de Comprobante es requerido.
+                            <option [value]="prenda.PREN_ID" *ngFor="let prenda of prendas">{{prenda.PREN_NOMBRE}}</option>
+                            <div *ngIf="prenda!.invalid && (prenda!.dirty || prenda!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="prenda!.errors!.required">
+                                    * La prenda es requerida.
                                 </div>
                             </div>
                         </select>                        
                     </div>
+                </div>
+                <div class="row justify-content-center">
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                        <label for="inputNumComprobante">Número de Comprobante</label>
+                        <label for="inputPrecio">Precio</label>
                         <div>
-                            <input type="text" formControlName="numComprobante" id="inputNumComprobante" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Número de Comprobante">
-                            <div *ngIf="numComprobante!.invalid && (numComprobante!.dirty || numComprobante!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <input type="text" formControlName="precio" id="inputPrecio" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Precio">
+                            <div *ngIf="precio!.invalid && (precio!.dirty || precio!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
                                 <!-- <div *ngIf="nombres!.errors!.required">
                                 * El nombre de usuario es requerido.
                                 </div>
@@ -214,61 +213,35 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                        <label class="mr-sm-2" for="inputProveedor">Proveedor</label>
-                        <select  formControlName="proveedor" id="inputProveedor" class="border-left-primary form-select mr-sm-2" >
-                            <option hidden value="" disabled>Escoge una opción</option>
-                            <option [value]="proveedor.PROV_ID" *ngFor="let proveedor of proveedores">{{proveedor.PROV_RAZON_SOCIAL}}</option>
-                            <div *ngIf="proveedor!.invalid && (proveedor!.dirty || proveedor!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
-                                <div *ngIf="proveedor!.errors!.required">
-                                    * El Proveedor es requerido.
+                        <label for="inputCantidad">Cantidad</label>
+                        <div>
+                            <input type="text" formControlName="cantidad" id="inputCantidad" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Cantidad">
+                            <div *ngIf="cantidad!.invalid && (cantidad!.dirty || cantidad!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <!-- <div *ngIf="nombres!.errors!.required">
+                                * El nombre de usuario es requerido.
                                 </div>
+                                <div *ngIf="nombres!.errors!.maxlength">
+                                * Se requieren máximo 60 caracteres.
+                                </div>
+                                <div *ngIf="nombres!.errors!.pattern">
+                                * El formato es inválido.
+                                </div> -->
                             </div>
-                        </select>                        
-                    </div>
-                </div>
-                <div class="py-1 col-sm-12 col-md-4 col-lg-3">
-                        <button [disabled]="cargando" (click)="agregarDetalleCompra()" style="float:right" type="button" class="boton btn btn-primary">
-                            Agregar Detalle
-                        </button>                      
-                </div>
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Código</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombre</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Marca</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Talla</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cantidad</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- <tr *ngFor="let compra of compras |filterUserByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  "> -->
-                                <tr *ngFor="let compraDetalle of comprasDetalle ; let i = index  ">
-                                    <td class=""   class="" >{{compraDetalle.PREN_CODIGO}}</td>
-                                    <td class=""   class="" >{{compraDetalle.PREN_NOMBRE}}</td>
-                                    <td class=""   class="" >{{compraDetalle.PREN_MARCA}}</td>
-                                    <td class=""   class="" >{{compraDetalle.TALLA_NOMBRE}}</td>
-                                    <td class=""   class="" >{{compraDetalle.DET_COMPRA_CANTIDAD}}</td>
-                                    <td class=""   class="" >{{compraDetalle.DET_COMPRA_PRECIO}}</td>
-                            </tbody>
-                        </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
     <div class="row d-flex text-center justify-content-center">
-        <!-- <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
-            <button  (click)="createUser();" [disabled]="userForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
+        <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
+            <button  (click)="agregarDetalle();d('Cross click');" [disabled]=" cargando" class="btn btn-primary btn-icon-split" >
                 <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
             </button>
-        </div> -->
+        </div>
         <div class="my-2 col-sm-12 col-md-12 col-lg-3">
             <button [disabled]="cargando" (click)="d('Cross click')" class="btn btn-warning btn-icon-split">
-                <span class="text">Cancelar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
+                <span class="text">Cerrar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
             </button>
         </div>
     </div>
