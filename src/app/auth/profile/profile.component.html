@@ -1,0 +1,144 @@
+<div class="container-fluid con py-4">
+    <div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="d-flex align-items-center">
+                    <p class="mb-0">Edit Profile</p>
+                    <button [disabled]="cargando" class="col-4 btn btn-primary" (click)="userUpdate()">Actualizar</button>
+                </div>
+            </div>
+        <div class="card-body">
+            <p class="text-uppercase text-sm">Informacion de usuario</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Username</label>
+                        <input type="text" formControlName="user" class="border-left-primary font-tamanio form-control" placeholder="Ingrese usuario...">
+                        <div *ngIf="user!.invalid && (user!.dirty || user!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <div *ngIf="user!.errors!.required">
+                            * El nombre de la categoría es requerido.
+                            </div>
+                            <div *ngIf="user!.errors!.maxlength">
+                            * Se requieren máximo 60 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Email</label>
+                        <input type="email" formControlName="email" class="border-left-primary font-tamanio form-control " placeholder="Ingrese correo electrónico...">
+                        <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <div *ngIf="email!.errors!.required">
+                            * El email es requerido.
+                            </div>
+                            <div *ngIf="email!.errors!.maxlength">
+                            * Se requieren máximo 60 caracteres.
+                            </div>
+                            <div *ngIf="email!.errors!.pattern">
+                            * El formato es inválido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Contraseña</label>
+                        <div class="p-0 col-sm-8 col-md-11 col-lg-12 d-flex">
+                            <input type={{PASSWORD_CURRENT_TYPE}} id="inputContrasenia" formControlName="contrasena" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Contraseña">
+                            <button style="border-style:none" (click)="cambiarVistaContrasena()">
+                                <i  class={{PASSWORD_CURRENT_ICON}} aria-hidden="true" ></i>
+                            </button>
+                        </div>
+                        <div *ngIf="contrasena!.invalid && (contrasena!.dirty || contrasena!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <div *ngIf="contrasena!.errors!.required">
+                            * La contraseña es requerida.
+                            </div>
+                            <div *ngIf="contrasena!.errors!.maxlength">
+                            * Se requieren máximo 20 caracteres.
+                            </div>
+                            <div *ngIf="contrasena!.errors!.minlength">
+                            * Se requieren mínimo 8 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="horizontal dark">
+            <p class="text-uppercase text-sm">Informacion personal</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Nombre</label>
+                      <input type="text" formControlName="nombres" class="border-left-primary font-tamanio form-control " placeholder="Ingrese correo electrónico...">
+                        <div *ngIf="nombres!.invalid && (nombres!.dirty || nombres!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <div *ngIf="nombres!.errors!.required">
+                            * El nombre de usuario es requerido.
+                            </div>
+                            <div *ngIf="nombres!.errors!.maxlength">
+                            * Se requieren máximo 50 caracteres.
+                            </div>
+                            <div *ngIf="nombres!.errors!.pattern">
+                            * El formato es inválido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Apellido Paterno</label>
+                        <input type="text" formControlName="apellido_paterno" class="border-left-primary font-tamanio form-control " placeholder="Ingrese apellido paterno...">
+                            <div *ngIf="apellido_paterno!.invalid && (apellido_paterno!.dirty || apellido_paterno!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="apellido_paterno!.errors!.required">
+                                * El apellido paterno es requerido.
+                                </div>
+                                <div *ngIf="apellido_paterno!.errors!.maxlength">
+                                * Se requieren máximo 30 caracteres.
+                                </div>
+                                <div *ngIf="apellido_paterno!.errors!.pattern">
+                                * El formato es inválido.
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Apellido Materno</label>
+                        <input type="text" formControlName="apellido_materno" class="border-left-primary font-tamanio form-control " placeholder="Ingrese apellido materno...">
+                        <div *ngIf="apellido_materno!.invalid && (apellido_materno!.dirty || apellido_materno!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <div *ngIf="apellido_materno!.errors!.required">
+                            * El apellido materno es requerido.
+                            </div>
+                            <div *ngIf="apellido_materno!.errors!.maxlength">
+                            * Se requieren máximo 30 caracteres.
+                            </div>
+                            <div *ngIf="apellido_materno!.errors!.pattern">
+                            * El formato es inválido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="inputSexoServicio" data-toggle="tooltip" data-placement="top" title="*Obligatorio"><strong>Sexo: </strong><small class="text-danger" data-toggle="tooltip" data-placement="top" title="*Obligatorio">(*)</small></label>
+                        <select  formControlName="sexo" id="inputSexoServicio" class="border-left-primary form-select">
+                            <option hidden value="" disabled>Selecciona una opción</option>
+                            <option [value]="1" >MASCULINO</option>
+                            <option [value]="0" >FEMENINO</option>
+                        </select>
+                        <div *ngIf="sexo!.invalid && (sexo!.dirty || sexo!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <div *ngIf="sexo!.errors!.required">
+                                * El tipo de sexo es requerido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+    </div> 
+    </div>
+    
+</div>

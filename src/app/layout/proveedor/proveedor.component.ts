@@ -238,6 +238,43 @@ export class ProveedorComponent implements OnInit {
     }
   }
 
+  habilitarInhabilitarProveedor(PROV_ID:number,PROV_ESTADO:number){
+    this.cargando = true;
+    
+    this.modalIn = false;
+    if(PROV_ESTADO == 0){
+      PROV_ESTADO = +1; 
+      this.mensaje_alerta = 'Se habilitó el usuario satisfactoriamente.';
+    }else{
+      PROV_ESTADO = +0; 
+      this.mensaje_alerta = 'Se inhabilitó el usuario satisfactoriamente.'
+
+    }
+    
+    this.proveedorService.habilitarInhabilitarProveedor(PROV_ID,PROV_ESTADO).subscribe(data=>
+      { 
+        this.tipo_alerta = 'success';
+        this.mostrar_alerta = true; 
+        this.listarProveedor();
+      },error=>{
+        this.cargando = false;
+        this.mostrar_alerta = true;
+        this.tipo_alerta='danger';
+        if (error['error']['error'] !== undefined) {
+          if (error['error']['error'] === 'error_deBD') {
+            this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página.';
+          }else if(error.error.error === 'error_deCampo'){
+            this.mensaje_alerta = 'Los datos ingresados son invalidos. Por favor, vuelva a intentarlo.';
+          }else if (error['error']['error'] === 'error_exitenciaId') {
+            this.mensaje_alerta = 'El usuario seleccionado no existe.';
+          }
+        }
+        else{
+          this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página.';
+        }
+      });
+  }
+
 
   @ViewChildren(SorteableDirective) headers: QueryList<SorteableDirective>;
   

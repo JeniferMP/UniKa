@@ -45,4 +45,13 @@ updateProveedor(proveedor:Proveedor):Observable<any>{
   }
   return this.http.put<any>(url,datos).pipe(retry(2));
 }
+
+habilitarInhabilitarProveedor(PROV_ID:number,numeroEstado:number):Observable<any>{
+  const url = environment.domain_url + '/api/proveedor/habilitarInhabilitarProveedor.php';
+  const datos = {
+    PROV_ID: PROV_ID,
+    PROV_ESTADO: numeroEstado
+  }
+  return this.http.put<any>(url,datos).pipe( retry(2));
+}
 }

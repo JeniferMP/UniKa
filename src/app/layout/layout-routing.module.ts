@@ -8,6 +8,7 @@ import { PrendaComponent } from './prenda/prenda.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { CompraComponent } from './compra/compra.component';
 import { VentaComponent } from './venta/venta.component';
+import { ProfileComponent } from '../auth/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
       {path:'prendas',component:PrendaComponent},
       {path:'proveedor',component:ProveedorComponent},
       {path:'compras',component:CompraComponent},
-      {path:'ventas',component:VentaComponent}
+      {path:'ventas',component:VentaComponent},
+      {path:'perfil',component:ProfileComponent}
     ]
   }
 ];

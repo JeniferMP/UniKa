@@ -7,6 +7,7 @@ import { LayoutComponent } from './layout/layout.component';
 import {UsuarioComponent} from './layout/usuario/usuario.component';
 import { PrendaComponent } from './layout/prenda/prenda.component';
 import { ProveedorComponent } from './layout/proveedor/proveedor.component';
+import { ProfileComponent } from './auth/profile/profile.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'usuario',component:UsuarioComponent},
   {path: 'prenda',component:PrendaComponent},
   {path: 'proveedor',component:ProveedorComponent},
+  {path: 'perfil',component:ProfileComponent},
   {path:'',redirectTo:'',pathMatch:'full'},
   {path:'**',redirectTo:''},
   //{path:'not-found',component:NotfoundComponent}
