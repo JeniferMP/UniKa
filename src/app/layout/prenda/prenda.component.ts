@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { StorageService } from 'src/app/services/storage.service';
 import { Prenda } from 'src/app/models/prenda.model';
-
+import { TallaService } from 'src/app/services/talla.service';
+import { DetallePrenda } from 'src/app/models/detallePrenda.model';
 @Component({
   selector: 'app-prenda',
   templateUrl: './prenda.component.html',
@@ -17,8 +18,11 @@ export class PrendaComponent implements OnInit {
   prendas_iniciales: any[] = [];
   categorias_iniciales: any[]=[];
   categorias: any[]=[];
+  tallas:any[]=[];
+  tallas_iniciales: any[] = [];
   PREN_ID: any;
   nuevaPrenda = new Prenda();
+  detallePrenda = new DetallePrenda();
   prendaSeleccionada = new Prenda();
   cargando = false;
   modalIn = false;
@@ -38,10 +42,15 @@ export class PrendaComponent implements OnInit {
     precio: ['',[Validators.required, Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$') ,Validators.maxLength(60)]],
     categoria:['',[Validators.required]]
 });
+detallePrendaFrom : FormGroup = this.formBuilder.group({
+  talla:[''],
+  stock: ['',[Validators.required, Validators.pattern('[0-9]*') ,Validators.maxLength(60)]],
+});
 
 
   constructor(
     private prendaService:PrendaService,
+    private tallaService: TallaService,
     private categoriaService:CategoriaService,
     private formBuilder: FormBuilder,
     public modal: NgbModal,
@@ -56,6 +65,7 @@ export class PrendaComponent implements OnInit {
   @ViewChild('crearPrendaModal') crearPrendaModal: ElementRef;
   @ViewChild('verMasModal') verMasModal: ElementRef; 
   @ViewChild('editPrendaModal') editPrendaModal: ElementRef; 
+  @ViewChild('agregarTallaModal') agregarTallaModal: ElementRef; 
 
   ngOnInit(): void {
     this.listarPrendas()
@@ -84,6 +94,12 @@ export class PrendaComponent implements OnInit {
   }
   get categoria() {
     return this.prendaForm.get('categoria');
+  }
+  get talla() {
+    return this.detallePrendaFrom.get('talla');
+  }
+  get stock() {
+    return this.detallePrendaFrom.get('stock');
   }
 
   listarProductos(id_cat:number){
@@ -251,6 +267,92 @@ export class PrendaComponent implements OnInit {
     this.precio!.setValue(prenda.PREN_PRECIO);
     this.categoria!.setValue(prenda.CAT_ID);
     this.modal.open(this.editPrendaModal);
+  }
+
+  agregarTalla(prenda:any){
+    this.listarTallas();
+    console.log(this.tallas)
+    this.IdPrenda= prenda.PREN_ID;
+    this.modal.open(this.agregarTallaModal);
+  }
+
+  registrarDetallePrenda(){
+    this.cargando = true;
+    if(this.detallePrendaFrom.invalid){
+      this.modalIn = true;
+      this.mostrar_alerta = true;
+      this.cargando = false;
+      this.tipo_alerta = 'danger';
+      this.mensaje_alerta = 'Los datos ingresados son invalidos. Por favor, vuelva a intentarlo.';
+    }else{
+      this.modalIn = true;
+      this.detallePrenda.PREN_ID=this.IdPrenda;
+      this.detallePrenda.TALLA_ID=this.talla!.value;
+      this.detallePrenda.DET_PREN_STOCK_MIN=this.stock!.value;
+      this.prendaService.registrarDetallePrenda(this.detallePrenda).subscribe(
+        data=>{
+          if(data.exito){
+            this.modalIn = false;
+            this.closeModal();
+            this.mensaje_alerta = 'Prenda registrada con éxito.';
+            this.tipo_alerta = 'success';
+            this.mostrar_alerta = true;
+            this.listarPrendas();
+          }
+        },
+        error=>{
+          this.cargando = false;
+          this.modalIn = true;
+          this.mostrar_alerta = true;
+          this.tipo_alerta='danger';
+          if (error['error']['error'] !== undefined) {
+            // if (error['error']['error'] === 'error_deBD') {
+            //   this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página o inténtelo más tarde.';
+            // }
+            // if (error['error']['error'] === 'error_ejecucionQuery') {
+            //   this.mensaje_alerta = 'Hubo un error al registrar la prenda. Por favor, actualice la página o inténtelo más tarde.';
+            // }
+            // else if (error['error']['error'] === 'error_exitenciaCategoriaId') {
+            //   this.mensaje_alerta = 'El id de la categoria no existe.';
+            // }
+            // else if (error['error']['error'] === 'error_existenciaPrendaCodigo') {
+            //   this.mensaje_alerta ='La prenda con código '+this.nuevaPrenda.PREN_CODIGO+' ya está registrada.';
+            // }
+            // else if (error['error']['error'] === 'error_existenciaPrendaNombre') {
+            //   this.mensaje_alerta ='La prenda '+this.nuevaPrenda.PREN_NOMBRE+' ya está registrada.';
+            // }
+          }
+          else{
+            this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página o inténtelo más tarde.';
+          }
+        }
+      )
+    }
+  }
+  listarTallas(){
+    this.cargando = true;
+    this.modalIn = false;
+    this.tallaService.listarTallas().subscribe(
+      (data)=>{
+        this.tallas_iniciales = data['resultado'];
+        this.tallas = this.tallas_iniciales.slice();
+        this.cargando = false;
+      },
+      (error) =>{
+        this.cargando = false;
+        this.mostrar_alerta = true;
+        this.tipo_alerta='danger';
+        this.modalIn = false;
+        if (error['error']['error'] !== undefined) {
+          if (error['error']['error'] === 'error_deBD') {
+            this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página.';
+          }
+        }
+        else{
+          this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página.';
+        }
+      }
+    ); 
   }
 
   actualizarPrenda(){

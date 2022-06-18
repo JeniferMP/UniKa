@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { retry } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Prenda } from '../models/prenda.model';
+import { DetallePrenda } from '../models/detallePrenda.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +51,15 @@ listarPrendasHabilitadasPorCategoria(idCat:number):Observable<any>{
       CAT_ID : prenda.CAT_ID,
     }
     return this.http.put<any>(url,datos).pipe(retry(2));
+  }
+  registrarDetallePrenda(detallePrenda:DetallePrenda):Observable<any>{
+    const url = environment.domain_url + '/api/detallePrenda/insertarDetallePrenda.php';
+    const datos = {
+      
+      PREN_ID : detallePrenda.PREN_ID,
+      TALLA_ID : detallePrenda.TALLA_ID,
+      DET_PREN_STOCK_MIN:detallePrenda.DET_PREN_STOCK_MIN
+    }
+    return this.http.post<any>(url,datos).pipe(retry(1));
   }
 }
