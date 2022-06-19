@@ -9,6 +9,7 @@ import { ProveedorComponent } from './proveedor/proveedor.component';
 import { CompraComponent } from './compra/compra.component';
 import { VentaComponent } from './venta/venta.component';
 import { ProfileComponent } from '../auth/profile/profile.component';
+import { ClientesComponent } from './clientes/clientes.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
       {path:'proveedor',component:ProveedorComponent},
       {path:'compras',component:CompraComponent},
       {path:'ventas',component:VentaComponent},
-      {path:'perfil',component:ProfileComponent}
+      {path:'perfil',component:ProfileComponent},
+      {path:'clientes',component:ClientesComponent}
     ]
   }
 ];

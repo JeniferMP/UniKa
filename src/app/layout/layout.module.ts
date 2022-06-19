@@ -15,6 +15,7 @@ import { DirectivesModule } from '../shared/directives/directives.module';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { CompraComponent } from './compra/compra.component';
 import { VentaComponent } from './venta/venta.component';
+import { ClientesComponent } from './clientes/clientes.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { VentaComponent } from './venta/venta.component';
     PrendaComponent,
     ProveedorComponent,
     CompraComponent,
-    VentaComponent
+    VentaComponent,
+    ClientesComponent
 
   ],
   imports: [

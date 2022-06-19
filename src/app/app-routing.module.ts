@@ -8,6 +8,7 @@ import {UsuarioComponent} from './layout/usuario/usuario.component';
 import { PrendaComponent } from './layout/prenda/prenda.component';
 import { ProveedorComponent } from './layout/proveedor/proveedor.component';
 import { ProfileComponent } from './auth/profile/profile.component';
+import { ClientesComponent } from './layout/clientes/clientes.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'prenda',component:PrendaComponent},
   {path: 'proveedor',component:ProveedorComponent},
   {path: 'perfil',component:ProfileComponent},
+  {path: 'clientes',component:ClientesComponent},
   {path:'',redirectTo:'',pathMatch:'full'},
   {path:'**',redirectTo:''},
   //{path:'not-found',component:NotfoundComponent}
