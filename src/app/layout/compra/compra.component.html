@@ -93,8 +93,8 @@
                         <div>
                             <input type="text" formControlName="numComprobante" id="inputNumComprobante" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Número de Comprobante">
                             <div *ngIf="numComprobante!.invalid && (numComprobante!.dirty || numComprobante!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
-                                <div *ngIf="numComprobante!.errors!.required">
-                                * El numero de comprobante es requerido.
+                                <div *ngIf="numComprobante!.errors!.pattern">
+                                * El numero de comprobante debe ser alfanumérico.
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
     </div>
     <div class="row d-flex text-center justify-content-center">
         <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
-            <button  (click)="crearCompra();" [disabled]=" cargando" class="btn btn-primary btn-icon-split" >
+            <button  (click)="crearCompra();" [disabled]="compraForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
                 <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
             </button>
         </div>
@@ -192,15 +192,12 @@
                         <div>
                             <input type="text" formControlName="precio" id="inputPrecio" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Precio">
                             <div *ngIf="precio!.invalid && (precio!.dirty || precio!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
-                                <!-- <div *ngIf="nombres!.errors!.required">
-                                * El nombre de usuario es requerido.
+                                <div *ngIf="precio!.errors!.required">
+                                    * El precio es requerido.
                                 </div>
-                                <div *ngIf="nombres!.errors!.maxlength">
-                                * Se requieren máximo 60 caracteres.
+                                <div *ngIf="precio!.errors!.pattern">
+                                    * El formato es inválido.
                                 </div>
-                                <div *ngIf="nombres!.errors!.pattern">
-                                * El formato es inválido.
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -211,15 +208,12 @@
                         <div>
                             <input type="text" formControlName="cantidad" id="inputCantidad" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Cantidad">
                             <div *ngIf="cantidad!.invalid && (cantidad!.dirty || cantidad!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
-                                <!-- <div *ngIf="nombres!.errors!.required">
-                                * El nombre de usuario es requerido.
+                                <div *ngIf="cantidad!.errors!.required">
+                                * La cantidad es requerida.
                                 </div>
-                                <div *ngIf="nombres!.errors!.maxlength">
-                                * Se requieren máximo 60 caracteres.
-                                </div>
-                                <div *ngIf="nombres!.errors!.pattern">
+                                <div *ngIf="cantidad!.errors!.pattern">
                                 * El formato es inválido.
-                                </div> -->
+                                </div>
                             </div>
                         </div>
                     </div>

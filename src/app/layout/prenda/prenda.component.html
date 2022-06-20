@@ -63,7 +63,7 @@
                                           </button>
                                       </div>
                                       <div class="col-1 button-table btn-edit">
-                                        <button (click)="agregarTalla(prenda)" class="btn btn-primary btn-circle btn-sm" ngbTooltip="Agregar Tallas" >
+                                        <button (click)="agregarTalla(prenda)" class="btn btn-primary btn-circle btn-sm" ngbTooltip="Registrar Talla" >
                                              <i style="color: white;" class="fa fa-tshirt" aria-hidden="true"   ></i>
                                          </button>
                                      </div>
@@ -107,6 +107,12 @@
                             <div *ngIf="codigo!.errors!.required">
                             * El código de prenda es requerido.
                             </div>
+                            <div *ngIf="codigo!.errors!.pattern">
+                                * El código de prenda no debe contener los siguientes símbolos($-%-&-#).
+                            </div>
+                            <div *ngIf="codigo!.errors!.maxlength">
+                                * Se requieren máximo 60 caracteres.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,6 +123,12 @@
                           <div *ngIf="nombre!.invalid && (nombre!.dirty || nombre!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
                               <div *ngIf="nombre!.errors!.required">
                               * El nombre de prenda es requerido.
+                              </div>
+                              <div *ngIf="nombre!.errors!.pattern">
+                                * El campo solo acepta caracteres alfabéticos.
+                              </div>
+                              <div *ngIf="nombre!.errors!.maxlength">
+                                * Se requieren máximo 40 caracteres.
                               </div>
                           </div>
                       </div>
@@ -129,6 +141,12 @@
                             <div *ngIf="marca!.errors!.required">
                             * La marca de la prenda es requerida.
                             </div>
+                            <div *ngIf="marca!.errors!.pattern">
+                                * El campo solo acepta caracteres alfabéticos.
+                            </div>
+                            <div *ngIf="marca!.errors!.maxlength">
+                                * Se requieren máximo 40 caracteres.
+                            </div>
                         </div>
                     </div>
                   </div>
@@ -139,6 +157,9 @@
                       <div *ngIf="precio!.invalid && (precio!.dirty || precio!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
                           <div *ngIf="precio!.errors!.required">
                           * El precio de la prenda es requerida.
+                          </div>
+                          <div *ngIf="precio!.errors!.pattern">
+                            * El campo solo acepta valores numéricos.
                           </div>
                       </div>
                   </div>
@@ -252,6 +273,12 @@
                               <div *ngIf="codigo!.errors!.required">
                               * El código de prenda es requerido.
                               </div>
+                              <div *ngIf="codigo!.errors!.pattern">
+                                * El código de prenda no debe contener los siguientes símbolos($-%-&-#).
+                              </div>
+                              <div *ngIf="codigo!.errors!.maxlength">
+                                    * Se requieren máximo 60 caracteres.
+                              </div>
                           </div>
                       </div>
                   </div>
@@ -262,6 +289,12 @@
                             <div *ngIf="nombre!.invalid && (nombre!.dirty || nombre!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
                                 <div *ngIf="nombre!.errors!.required">
                                 * El nombre de prenda es requerido.
+                                </div>
+                                <div *ngIf="nombre!.errors!.pattern">
+                                    * El campo solo acepta caracteres alfabéticos.
+                                </div>
+                                <div *ngIf="nombre!.errors!.maxlength">
+                                    * Se requieren máximo 40 caracteres.
                                 </div>
                             </div>
                         </div>
@@ -274,6 +307,12 @@
                               <div *ngIf="marca!.errors!.required">
                               * La marca de la prenda es requerida.
                               </div>
+                              <div *ngIf="marca!.errors!.pattern">
+                                * El campo solo acepta caracteres alfabéticos.
+                              </div>
+                              <div *ngIf="marca!.errors!.maxlength">
+                                * Se requieren máximo 40 caracteres.
+                              </div>
                           </div>
                       </div>
                     </div>
@@ -284,6 +323,9 @@
                         <div *ngIf="precio!.invalid && (precio!.dirty || precio!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
                             <div *ngIf="precio!.errors!.required">
                             * El precio de la prenda es requerida.
+                            </div>
+                            <div *ngIf="precio!.errors!.pattern">
+                                * El campo solo acepta valores numéricos.
                             </div>
                         </div>
                     </div>
@@ -321,7 +363,7 @@
   </ng-template>
   <ng-template #agregarTallaModal let-d="dismiss">
     <div class="modal-header justify-content-center">
-        <h4 class="modal-title">Agregar Detalle Prenda</h4>
+        <h4 class="modal-title">Registrar Talla</h4>
     </div>
     <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
     <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
@@ -364,7 +406,7 @@
     <div class="row d-flex text-center justify-content-center">
         <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
             <button  (click)="registrarDetallePrenda();" [disabled]="detallePrendaFrom.invalid || cargando" class="btn btn-primary btn-icon-split" >
-                <span class="text">Registrar Detalle Prenda&nbsp;<i class="fas fa-save"></i></span>
+                <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
             </button>
         </div>
         <div class="my-2 col-sm-12 col-md-12 col-lg-3">

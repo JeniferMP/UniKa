@@ -36,10 +36,9 @@ export class PrendaComponent implements OnInit {
 
   prendaForm : FormGroup = this.formBuilder.group({
     codigo: ['', [Validators.required , Validators.pattern('^[^$%&|<>#]*$'), Validators.maxLength(20)]],
-    //[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+  
-    nombre: ['',[Validators.required, Validators.maxLength(60)]],
-    marca: ['',[Validators.required, Validators.maxLength(20)]],
-    precio: ['',[Validators.required, Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$') ,Validators.maxLength(60)]],
+    nombre: ['',[Validators.required,Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(40)]],
+    marca: ['',[Validators.required,Validators.pattern('[a-zñáéíóú A-ZÑÁÉÍÓÚ ]+'), Validators.maxLength(30)]],
+    precio: ['',[Validators.required, Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
     categoria:['',[Validators.required]]
 });
 detallePrendaFrom : FormGroup = this.formBuilder.group({
@@ -206,9 +205,6 @@ detallePrendaFrom : FormGroup = this.formBuilder.group({
       this.nuevaPrenda.PREN_ESTADO = 1;
       this.nuevaPrenda.PREN_IMAGEN = "";
       this.nuevaPrenda.CAT_ID = this.categoria!.value;
-      
-      
-
       this.prendaService.registerPrenda(this.nuevaPrenda).subscribe(
         data=>{
           if(data.exito){
@@ -306,21 +302,21 @@ detallePrendaFrom : FormGroup = this.formBuilder.group({
           this.mostrar_alerta = true;
           this.tipo_alerta='danger';
           if (error['error']['error'] !== undefined) {
-            // if (error['error']['error'] === 'error_deBD') {
-            //   this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página o inténtelo más tarde.';
-            // }
-            // if (error['error']['error'] === 'error_ejecucionQuery') {
-            //   this.mensaje_alerta = 'Hubo un error al registrar la prenda. Por favor, actualice la página o inténtelo más tarde.';
-            // }
-            // else if (error['error']['error'] === 'error_exitenciaCategoriaId') {
-            //   this.mensaje_alerta = 'El id de la categoria no existe.';
-            // }
-            // else if (error['error']['error'] === 'error_existenciaPrendaCodigo') {
-            //   this.mensaje_alerta ='La prenda con código '+this.nuevaPrenda.PREN_CODIGO+' ya está registrada.';
-            // }
-            // else if (error['error']['error'] === 'error_existenciaPrendaNombre') {
-            //   this.mensaje_alerta ='La prenda '+this.nuevaPrenda.PREN_NOMBRE+' ya está registrada.';
-            // }
+            if (error['error']['error'] === 'error_deBD') {
+              this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página o inténtelo más tarde.';
+            }
+            if (error['error']['error'] === 'error_ejecucionQuery') {
+              this.mensaje_alerta = 'Hubo un error al registrar la prenda. Por favor, actualice la página o inténtelo más tarde.';
+            }
+            else if (error['error']['error'] === 'error_existeDetalle') {
+              this.mensaje_alerta = 'Ya existe un detalle con la talla '+this.tallas.filter(talla => talla.TALLA_ID == this.detallePrenda.TALLA_ID)[0].TALLA_NOMBRE+' para la prenda '+ this.prendas.filter(prenda => prenda.PREN_ID == this.detallePrenda.PREN_ID)[0].PREN_NOMBRE;
+            }
+            else if (error['error']['error'] === 'erro_talla') {
+              this.mensaje_alerta ='La talla no se encontro o no esta registrada.';
+            }
+            else if (error['error']['error'] === 'error_prenda') {
+              this.mensaje_alerta ='La prenda no se encontro o no esta registrada.';
+            }
           }
           else{
             this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página o inténtelo más tarde.';

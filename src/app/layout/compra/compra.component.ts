@@ -37,15 +37,15 @@ export class CompraComponent implements OnInit {
 
 
   compraForm : FormGroup = this.formBuilder.group({
-    tipoComprobante:"",
-    numComprobante:"",    
-    proveedor:""
+    numComprobante:['',Validators.pattern('[A-Za-z0-9-]+')],
+    tipoComprobante:[''],
+    proveedor:['',[Validators.required]]
   });
 
   compraDetalleForm : FormGroup = this.formBuilder.group({
     prendaDetalleId:['',[Validators.required]],
-    precio: ['',[Validators.required]],
-    cantidad: ['',[Validators.required]],
+    precio: ['',[Validators.required],Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')],
+    cantidad: ['',[Validators.required], Validators.pattern('[0-9]+')],
   });
 
 
@@ -322,18 +322,20 @@ export class CompraComponent implements OnInit {
           if (error['error']['error'] !== undefined) {
             if (error['error']['error'] === 'error_deBD') {
               this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página o inténtelo más tarde.';
-            } else if (error.error.error === 'error_emailExistente'){
-              this.mensaje_alerta = 'El correo electrónico ya le pertenece a una cuenta. Por favor, ingrese uno diferente.';
-            } else if (error.error.error === 'error_nombreUsuarioExistente'){
-              this.mensaje_alerta = 'El nombre de usuario ya le pertenece a una cuenta, Por favor, ingrese uno diferente.';
-            } else if (error.error.error === 'error_dniExistente'){
-              this.mensaje_alerta = 'El DNI ya le pertenece a una cuenta, Por favor, ingrese uno diferente.';
-            } else if (error.error.error === 'error_celularExistente'){
-              this.mensaje_alerta = 'El número de celular ya le pertenece a una cuenta, Por favor, ingrese uno diferente.';
-            } else if (error.error.error === 'error_ejecucionQuery'){
-              this.mensaje_alerta = 'Hubo un error al registrar el usuario, Por favor, actualice la página o inténtelo más tarde.';
-            } else if (error.error.error === 'error_deCampo'){
-              this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, revise los campos ingresados.';
+            } else if (error.error.error === 'error_ExistenciaNumComprobanteCompra'){
+              this.mensaje_alerta = 'El número del comprobante de la compra ya existe.';
+            }
+            else if (error.error.error === 'error_ejecucionQuery'){
+              this.mensaje_alerta = 'No se logró obtener el id de la compra realizada.';
+            }
+            else if (error.error.error === 'error_ExistenciaDeComprobante'){
+              this.mensaje_alerta = 'El id del comprobante ingresado no existe.';
+            }
+            else if (error.error.error === 'error_ExistenciaProveedorId'){
+              this.mensaje_alerta = 'El id del proveedor ingresado no existe.';
+            }
+            else if (error.error.error === 'error_ExistenciaDeUsuario'){
+              this.mensaje_alerta = 'El id del usuario ingresado no existe.';
             }
           }
           else{
