@@ -137,7 +137,7 @@
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
                         <label for="inputCelular">Celular</label>
                         <div>
-                            <input type="text" formControlName="celular" id="inputCelular" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Celular">
+                            <input type="text" formControlName="telefono" id="inputCelular" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Celular">
                             <div *ngIf="telefono!.invalid && (telefono!.dirty || telefono!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
                                 <div *ngIf="telefono!.errors!.required">
                                 * El celular es requerido.
@@ -154,26 +154,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputCorreo" >Correo</label>
-                            <div>
-                                <input type="text" formControlName="email" id="inputCorreo" class="border-left-primary font-tamanio form-control" placeholder="Ingrese el correo">
-                                <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
-                                    <div *ngIf="email!.errors!.required">
-                                    * El direccion es requerido.
-                                    </div>
-                                    <div *ngIf="email!.errors!.maxlength">
-                                    * Se requieren máximo 100 caracteres.
-                                    </div>
-                                    <div *ngIf="email!.errors!.pattern">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputCorreo">Correo</label>
+                        <div>
+                            <input type="text" formControlName="email" id="inputCorreo" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Celular">
+                            <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="email!.errors!.required">
+                                * El celular es requerido.
+                                </div>
+                                <div *ngIf="email!.errors!.maxlength">
+                                * Se requieren máximo 60 caracteres.
+                                </div>
+                                
+                                <div *ngIf="telefono!.errors!.pattern">
                                     * El formato es inválido.
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </form>
     </div>
