@@ -1,8 +1,9 @@
 export class Cliente {
-    CLI_ID :number;
-    CLI_NOMBRE : string;
-    CLI_APE_PAT:string;
-    CLI_APE_MAT:string;
-    CLI_DNI:number;
-    CLI_CORREO:string
+    CLIENTE_ID :number;
+    CLIENTE_NOMBRES : string;
+    CLIENTE_APELLIDOS:string;
+    CLIENTE_DNI:number;
+    CLIENTE_CORREO:string;
+    CLIENTE_TELEFONO:string;
+    CLIENTE_ESTADO:number
 }

@@ -11,7 +11,7 @@
                             </div>
                         </div>
                         <div class="py-1 col-sm-12 col-md-4 col-lg-3" >
-                            <button  style="float:right" type="button" class="boton btn btn-primary ">Nuevo cliente</button>
+                            <button (click)="registerClienteModal()" style="float:right" type="button" class="boton btn btn-primary ">Nuevo cliente</button>
                         </div>                
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
@@ -22,33 +22,23 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Codigo</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombres</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Apellidos</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dni</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Celular</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rol</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Correo</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr  >
-                                    <td class=""   class="" ></td>
-                                    <td class=""   class="" ></td>
-                                    <td class=""></td> 
-                                    <td class="" ></td>
-                                    <td class="" ></td>
-                                    <td ></td>
+                                <tr *ngFor="let cli of clientes |slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  " >
+                                    <td class=""   class="" >{{cli.CLIENTE_ID}}</td>
+                                    <td class=""   class="" >{{cli.CLIENTE_NOMBRES}}</td>
+                                    <td class="">{{cli.CLIENTE_APELLIDOS}}</td> 
+                                    <td class="" >{{cli.CLIENTE_DNI}}</td>
+                                    <td class="" >{{cli.CLIENTE_TELEFONO}}</td>
+                                    <td class="" >{{cli.CLIENTE_CORREO}}</td>
+                                    <td *ngIf="cli.CLIENTE_ID != CLIENTES_ID">{{cli.CLIENTE_ESTADO==1?'Activo':'Inactivo'}}</td>
                                     <div class="row btnes">
-                                        <div class="col-1 button-table"  >
-                                            <span  class="btn btn-success btn-circle btn-sm " ngbTooltip="Habilitar">
-                                                <i class="fas fa-check" aria-hidden="true"></i>
-                                            </span>
-                                        </div>
-                                        <ng-template #Habilitar>
-                                            <div class="col-1 button-table">
-                                                <span   class="btn btn-danger btn-circle btn-sm "ngbTooltip="Deshabilitar">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </ng-template>
                                         <div class="col-1 button-table">
                                             <span  class="btn btn-primary btn-circle btn-sm" ngbTooltip="Ver Más" >
                                                 <i class="fas fa-eye" aria-hidden="true"></i>
@@ -80,3 +70,123 @@
         </div>
     </div>  
 </div>
+<!--modales-->
+<ng-template #createCliModal let-d="dismiss">
+    <div class="modal-header justify-content-center">
+        <h4 class="modal-title">Registrar Proveedor</h4>
+    </div>
+    <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
+    <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
+    <div class="modal-body">
+        <form [formGroup]="clienteForm">
+            <div class="form-group">
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputNombre">Nombres</label>
+                        <div>
+                            <input type="text" formControlName="nombres" id="inputNombre" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Nombre(s)">
+                            <div *ngIf="nombres!.invalid && (nombres!.dirty || nombres!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="nombres!.errors!.required">
+                                * El nombre de usuario es requerido.
+                                </div>
+                                <div *ngIf="nombres!.errors!.maxlength">
+                                * Se requieren máximo 60 caracteres.
+                                </div>
+                                <div *ngIf="nombres!.errors!.pattern">
+                                * El formato es inválido.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputApellidos">Apellidos</label>
+                        <div>
+                            <input type="text" formControlName="apellidos" id="inputApellidos" class="border-left-primary font-tamanio form-control" placeholder="Ingrese los Apellidos">
+                            <div *ngIf="apellidos!.invalid && (apellidos!.dirty || apellidos!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="apellidos!.errors!.required">
+                                * Los apellidos son requeridos.
+                                </div>
+                                <div *ngIf="apellidos!.errors!.maxlength">
+                                * Se requieren máximo 30 caracteres.
+                                </div>
+                                <div *ngIf="apellidos!.errors!.pattern">
+                                * El formato es inválido.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputDni">DNI</label>
+                        <div>
+                            <input type="text" formControlName="dni" id="inputDni" class="border-left-primary font-tamanio form-control" placeholder="Ingrese su dni">
+                            <div *ngIf="dni!.invalid && (dni!.dirty || dni!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="dni!.errors!.required">
+                                * Los apellidos son requeridos.
+                                </div>
+                                <div *ngIf="dni!.errors!.maxlength">
+                                * Se requieren máximo 8 caracteres.
+                                </div>
+                                <div *ngIf="dni!.errors!.pattern">
+                                * El formato es inválido.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputCelular">Celular</label>
+                        <div>
+                            <input type="text" formControlName="celular" id="inputCelular" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Celular">
+                            <div *ngIf="telefono!.invalid && (telefono!.dirty || telefono!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="telefono!.errors!.required">
+                                * El celular es requerido.
+                                </div>
+                                <div *ngIf="telefono!.errors!.maxlength">
+                                * Se requieren máximo 9 caracteres.
+                                </div>
+                                <div *ngIf="telefono!.errors!.minlength">
+                                * Se requieren mínimo 9 caracteres.
+                                </div>
+                                <div *ngIf="telefono!.errors!.pattern">
+                                    * El formato es inválido.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputCorreo" >Correo</label>
+                            <div>
+                                <input type="text" formControlName="email" id="inputCorreo" class="border-left-primary font-tamanio form-control" placeholder="Ingrese el correo">
+                                <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                    <div *ngIf="email!.errors!.required">
+                                    * El direccion es requerido.
+                                    </div>
+                                    <div *ngIf="email!.errors!.maxlength">
+                                    * Se requieren máximo 100 caracteres.
+                                    </div>
+                                    <div *ngIf="email!.errors!.pattern">
+                                    * El formato es inválido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row d-flex text-center justify-content-center">
+        <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
+            <button  (click)="createCliente();" [disabled]="clienteForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
+                <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
+            </button>
+        </div>
+        <div class="my-2 col-sm-12 col-md-12 col-lg-3">
+            <button [disabled]="cargando" (click)="d('Cross click')" class="btn btn-warning btn-icon-split">
+                <span class="text">Cancelar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
+            </button>
+        </div>
+    </div>
+</ng-template>
