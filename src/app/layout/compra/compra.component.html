@@ -150,7 +150,7 @@
     </div>
     <div class="row d-flex text-center justify-content-center">
         <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
-            <button  (click)="crearCompra();" [disabled]="compraForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
+            <button  (click)="crearCompra();" [disabled]="compraForm.invalid || cargando || existsComprasDetalleCreadas" class="btn btn-primary btn-icon-split" >
                 <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
             </button>
         </div>
@@ -223,7 +223,7 @@
     </div>
     <div class="row d-flex text-center justify-content-center">
         <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
-            <button  (click)="agregarDetalle();d('Cross click')" [disabled]=" cargando" class="btn btn-primary btn-icon-split" >
+            <button  (click)="agregarDetalle();d('Cross click')" [disabled]="compraDetalleForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
                 <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
             </button>
         </div>

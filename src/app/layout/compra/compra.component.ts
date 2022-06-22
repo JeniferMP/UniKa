@@ -44,8 +44,8 @@ export class CompraComponent implements OnInit {
 
   compraDetalleForm : FormGroup = this.formBuilder.group({
     prendaDetalleId:['',[Validators.required]],
-    precio: ['',[Validators.required],Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')],
-    cantidad: ['',[Validators.required], Validators.pattern('[0-9]+')],
+    precio: ['',[Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
+    cantidad: ['',[Validators.required, Validators.pattern('[0-9]*')]],
   });
 
 
@@ -74,6 +74,7 @@ export class CompraComponent implements OnInit {
   mensaje_alerta: string;
   mostrar_alerta: boolean = false;
   tipo_alerta: string;
+  existsComprasDetalleCreadas=true;
 
   @ViewChild('seeDetalle') seeDetalle: ElementRef; 
 
@@ -90,7 +91,7 @@ export class CompraComponent implements OnInit {
   inicializarFormulario(){
     this.compraForm.reset();
     }
-  
+    
   inicializarFormularioDetalle(){
       this.compraDetalleForm.reset();
     }
@@ -114,6 +115,7 @@ export class CompraComponent implements OnInit {
       return this.compraDetalleForm.get('cantidad');
     }
   listarCompras(){
+    console.log(this.existsComprasDetalleCreadas)
     this.cargando=true;
     this.mostrar_alerta=false;
     this.compraService.listarCompras().subscribe(
@@ -175,6 +177,8 @@ export class CompraComponent implements OnInit {
   }
 
   agregarCompra(){
+    this.existsComprasDetalleCreadas=true;
+    console.log(this.existsComprasDetalleCreadas)
     this.mostrar_alerta = false;
     this.inicializarFormulario();
     this.listarProveedor();
@@ -183,6 +187,7 @@ export class CompraComponent implements OnInit {
   }
 
   agregarDetalleCompra(){
+    console.log(this.existsComprasDetalleCreadas)
     this.mostrar_alerta = false;
     this.inicializarFormularioDetalle();
     this.listarDetallePrendas();
@@ -282,6 +287,7 @@ export class CompraComponent implements OnInit {
     this.compraDetalleCreada.TALLA_NOMBRE=this.prendaDetalle.TALLA_NOMBRE
     this.comprasDetalleCreadas.push(this.compraDetalleCreada);
     console.log(this.comprasDetalleCreadas)
+    this.existsComprasDetalleCreadas=this.comprasDetalleCreadas.length>0?false:true;
   }
   crearCompra(){
     console.log("Crear Compra")

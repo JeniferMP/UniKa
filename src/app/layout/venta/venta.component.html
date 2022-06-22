@@ -1,5 +1,248 @@
+
+
 <div class="container">
-    <h1>
-        Aqui Ventas
-    </h1>
+    <div class="row">
+        <div class="col-11">
+            <div class="card mb-4" >
+                <div class="card-header pb-0 row justify-content-between">
+                        <div class="py-1 col-sm-12 col-md-5 col-lg-4">
+                            <div class="row">
+                                <!-- <div class="col">
+                                    <input type="text" class="border-left-primary font-tamanio form-control" [(ngModel)]="filtroTexto"  name="filtroTexto" placeholder="Buscar..." >
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="py-1 col-sm-12 col-md-4 col-lg-3" >
+                            <button  (click)="agregarVenta()" style="float:right" type="button" class="boton btn btn-primary">Agregar venta</button>
+                        </div>                
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Venta</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fecha</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CLIENTE</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">USUARIO</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">TOTAL</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let venta of ventas ; let i = index  ">
+                                    <td class=""   class="" >{{venta.VENTA_ID}}</td>
+                                    <td class=""   class="" >{{venta.VENTA_FECHA}}</td>
+                                    <td class=""   class="" >{{venta.CLIENTE_NOMBRES}}&nbsp;{{venta.CLIENTE_APELLIDOS}}</td>
+                                    <td class=""   class="" >{{venta.USU_NOMBRES}}&nbsp;{{venta.USU_APELLIDO_PATERNO}}&nbsp;{{venta.USU_APELLIDO_MATERNO}}</td>
+                                    <td class=""   class="" >{{venta.VENTA_TOTAL}}</td>
+                                    <div class="row btnes">
+                                        <div class="col-1 button-table">
+                                            <span  (click)="seeMore(venta)" class="btn btn-primary btn-circle btn-sm" ngbTooltip="Ver Detalles" >
+                                                <i class="fas fa-eye" aria-hidden="true"   ></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div *ngIf="ventas.length>0" class="row box-footer clearfix mt-3">     
+                    <div class="col-xl-10 col-lg-9 col-md-7 col-sm-7 col-6">
+                    <ngb-pagination *ngIf="ventas.length>5" class="d-flex justify-content-start" size="sm" [maxSize]="5" [pageSize]="itemsPerPage"  [collectionSize]="ventas.length" [(page)]="currentPage"></ngb-pagination>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-5 col-sm-5 col-6">
+                    <select class="pull-right" [(ngModel)]="itemsPerPage" class="form-control form-control-sm custom-select">
+                        <option value="50">50 elementos</option>                    
+                        <option value="100">100 elementos</option>                    
+                        <option value="200">200 elementos</option>                    
+                    </select>  
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>  
 </div>
+
+<ng-template #seeDetalle>
+    <div class="modal-header justify-content-center">
+        <h4 class="modal-title">Ver Detalles</h4>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                    <div class="row justify-content-center">
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-7">
+                            <label for="inputTipoComprobante">Tipo de Comprobante</label>
+                            <div>
+                                <input type="text" disabled value="{{ventaSeleccionada.COMPROBANTE_TIPO}}" id="inputTipoComprobante" class="border-left-primary font-tamanio form-control">
+                            </div>
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-7">
+                            <label for="inputMetodoPago">Método de Pago</label>
+                            <div>
+                                <input type="text" disabled value="{{ventaSeleccionada.METODO_PAGO_DESCRIPCION}}" id="inputMetodoPago" class="border-left-primary font-tamanio form-control">
+                            </div>
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-7">
+                            <label for="inputFecha">Fecha</label>
+                            <div>
+                                <input type="text" disabled value="{{ventaSeleccionada.VENTA_FECHA}}" id="inputFecha" class="border-left-primary font-tamanio form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputCliente">Cliente</label>
+                            <div>
+                                <input type="text" disabled value="{{ventaSeleccionada.CLIENTE_NOMBRES}}&nbsp;{{ventaSeleccionada.CLIENTE_APELLIDOS}}" id="inputCliente" class="border-left-primary font-tamanio form-control">
+                            </div>
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputUsuario">Usuario</label>
+                            <div>
+                                <input type="text" disabled value="{{ventaSeleccionada.USU_NOMBRES}}&nbsp;{{ventaSeleccionada.USU_APELLIDO_PATERNO}}&nbsp;{{ventaSeleccionada.USU_APELLIDO_MATERNO}}" id="inputUsuario" class="border-left-primary font-tamanio form-control">
+                            </div>
+                        </div>
+                        <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                            <label for="inputTotal">Total</label>
+                            <div>
+                                <input type="text" disabled value="{{ventaSeleccionada.VENTA_TOTAL}}" id="inputTotal" class="border-left-primary font-tamanio form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Código</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombre</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Marca</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Talla</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cantidad</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let ventaDetalle of ventasDetalle ; let i = index  ">
+                                        <td class=""   class="" >{{ventaDetalle.VENTA_ID}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+            </div>
+        </form>
+        <br>
+        <div class="row justify-content-center ">
+            <div class="my-1 col-sm-3 col-md-3 col-lg-3">
+                <a (click)="closeModal()" class="btn btn-warning btn-icon-split">
+                    <span class="text"><strong>Cancelar</strong>&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #agregarVentaModal let-d="dismiss">
+    <div class="modal-header justify-content-center">
+        <h4 class="modal-title">Agregar Venta</h4>
+    </div>
+    <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
+    <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
+    <div class="modal-body">
+        <form [formGroup]="ventaForm">
+            <div class="form-group">
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label class="mr-sm-2" for="inputTipoComprobante">Tipo Comprobante</label>
+                        <select  formControlName="tipoComprobante" id="inputTipoComprobante" class="border-left-primary form-select mr-sm-2" >
+                            <option hidden value="" disabled>Escoge una opción</option>
+                            <!-- <option [value]="1" *ngFor="let tipo of tipos">BOLETA</option> -->
+                            <option [value]="1" >BOLETA</option>
+                            <option [value]="2" >FACTURA</option>
+                            <!-- <option [value]="2" *ngFor="let tipo of tipos">FACTURA</option> -->
+                            <!-- <div *ngIf="tipoComprobante!.invalid && (tipoComprobante!.dirty || tipoComprobante!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="tipoComprobante!.errors!.required">
+                                    * El Tipo de Comprobante es requerido.
+                                </div>
+                            </div> -->
+                        </select>                        
+                    </div>
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputNumComprobante">Número de Comprobante</label>
+                        <div>
+                            <input type="text" formControlName="numComprobante" id="inputNumComprobante" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Número de Comprobante">
+                            <!-- <div *ngIf="numComprobante!.invalid && (numComprobante!.dirty || numComprobante!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="numComprobante!.errors!.pattern">
+                                * El numero de comprobante debe ser alfanumérico.
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label class="mr-sm-2" for="inputProveedor">Proveedor</label>
+                        <select  formControlName="proveedor" id="inputProveedor" class="border-left-primary form-select mr-sm-2" >
+                            <option hidden value="" disabled>Escoge una opción</option>
+                            <option [value]="proveedor.PROV_ID" *ngFor="let proveedor of proveedores">{{proveedor.PROV_RAZON_SOCIAL}}</option>
+                            <div *ngIf="proveedor!.invalid && (proveedor!.dirty || proveedor!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="proveedor!.errors!.required">
+                                    * El Proveedor es requerido.
+                                </div>
+                            </div>
+                        </select>                        
+                    </div>
+                </div> -->
+                <!-- <div class="py-1 col-sm-12 col-md-4 col-lg-3">
+                        <button [disabled]="cargando" (click)="agregarDetalleCompra()" style="float:right" type="button" class="boton btn btn-primary">
+                            Agregar Detalle
+                        </button>                      
+                </div> -->
+                <!-- <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Código</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombre</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Marca</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Talla</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cantidad</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let compraDetalle of comprasDetalleCreadas ; let i = index  ">
+                                    <td class=""   class="" >{{compraDetalle.PREN_CODIGO}}</td>
+                                    <td class=""   class="" >{{compraDetalle.PREN_NOMBRE}}</td>
+                                    <td class=""   class="" >{{compraDetalle.PREN_MARCA}}</td>
+                                    <td class=""   class="" >{{compraDetalle.TALLA_NOMBRE}}</td>
+                                    <td class=""   class="" >{{compraDetalle.DET_COMPRA_CANTIDAD}}</td>
+                                    <td class=""   class="" >{{compraDetalle.DET_COMPRA_PRECIO}}</td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> -->
+            </div>
+        </form>
+    </div>
+    <div class="row d-flex text-center justify-content-center">
+        <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
+            <!-- <button  (click)="crearCompra();" [disabled]="compraForm.invalid || cargando || existsComprasDetalleCreadas" class="btn btn-primary btn-icon-split" >
+                <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
+            </button> -->
+        </div>
+        <div class="my-2 col-sm-12 col-md-12 col-lg-3">
+            <button [disabled]="cargando" (click)="d('Cross click')" class="btn btn-warning btn-icon-split">
+                <span class="text">Cancelar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
+            </button>
+        </div>
+    </div>
+</ng-template>
