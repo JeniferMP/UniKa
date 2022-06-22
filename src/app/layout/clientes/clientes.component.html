@@ -6,7 +6,7 @@
                         <div class="py-1 col-sm-12 col-md-5 col-lg-4">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="border-left-primary font-tamanio form-control"  name="filtroTexto" placeholder="Buscar..." >
+                                    <input type="text" class="border-left-primary font-tamanio form-control" [(ngModel)]="filtroTexto"  name="filtroTexto" placeholder="Buscar..." >
                                 </div>
                             </div>
                         </div>
@@ -26,11 +26,10 @@
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Celular</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Correo</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let cli of clientes |slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  " >
+                                <tr *ngFor="let cli of clientes |filterClienteByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  " >
                                     <td class=""   class="" >{{cli.CLIENTE_ID}}</td>
                                     <td class=""   class="" >{{cli.CLIENTE_NOMBRES}}</td>
                                     <td class="">{{cli.CLIENTE_APELLIDOS}}</td> 
@@ -38,18 +37,7 @@
                                     <td class="" >{{cli.CLIENTE_TELEFONO}}</td>
                                     <td class="" >{{cli.CLIENTE_CORREO}}</td>
                                     <td *ngIf="cli.CLIENTE_ID != CLIENTES_ID">{{cli.CLIENTE_ESTADO==1?'Activo':'Inactivo'}}</td>
-                                    <div class="row btnes">
-                                        <div class="col-1 button-table">
-                                            <span  class="btn btn-primary btn-circle btn-sm" ngbTooltip="Ver Más" >
-                                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                            </span>
-                                        </div>
-                                        <div class="col-1 button-table btn-edit">
-                                            <button  class="btn btn-warning btn-circle btn-sm" ngbTooltip="Editar" >
-                                                <i style="color: white;" class="far fa-edit" aria-hidden="true"   ></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                                    
                             </tbody>
                         </table>
                     </div>
