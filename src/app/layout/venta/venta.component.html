@@ -174,38 +174,36 @@
                             </div> -->
                         </select>                        
                     </div>
-                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                    <!-- <div class="my-2 col-sm-12 col-md-12 col-lg-6">
                         <label for="inputNumComprobante">Número de Comprobante</label>
                         <div>
                             <input type="text" formControlName="numComprobante" id="inputNumComprobante" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Número de Comprobante">
-                            <!-- <div *ngIf="numComprobante!.invalid && (numComprobante!.dirty || numComprobante!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                            <div *ngIf="numComprobante!.invalid && (numComprobante!.dirty || numComprobante!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
                                 <div *ngIf="numComprobante!.errors!.pattern">
                                 * El numero de comprobante debe ser alfanumérico.
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <!-- <div class="row justify-content-center">
+                    </div> -->
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                        <label class="mr-sm-2" for="inputProveedor">Proveedor</label>
-                        <select  formControlName="proveedor" id="inputProveedor" class="border-left-primary form-select mr-sm-2" >
+                        <label class="mr-sm-2" for="inputCliente">Cliente</label>
+                        <select  formControlName="cliente" id="inputCliente" class="border-left-primary form-select mr-sm-2" >
                             <option hidden value="" disabled>Escoge una opción</option>
-                            <option [value]="proveedor.PROV_ID" *ngFor="let proveedor of proveedores">{{proveedor.PROV_RAZON_SOCIAL}}</option>
-                            <div *ngIf="proveedor!.invalid && (proveedor!.dirty || proveedor!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
-                                <div *ngIf="proveedor!.errors!.required">
-                                    * El Proveedor es requerido.
+                            <option [value]="cliente.CLIENTE_ID" *ngFor="let cliente of clientes">{{cliente.CLIENTE_NOMBRES}}&nbsp;{{cliente.CLIENTE_APELLIDOS}}</option>
+                            <div *ngIf="cliente!.invalid && (cliente!.dirty || cliente!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="cliente!.errors!.required">
+                                    * El Cliente es requerido.
                                 </div>
                             </div>
                         </select>                        
                     </div>
-                </div> -->
-                <!-- <div class="py-1 col-sm-12 col-md-4 col-lg-3">
-                        <button [disabled]="cargando" (click)="agregarDetalleCompra()" style="float:right" type="button" class="boton btn btn-primary">
+                </div>
+                <div class="py-1 col-sm-12 col-md-4 col-lg-3">
+                        <button [disabled]="cargando" (click)="agregarDetalleVenta()" style="float:right" type="button" class="boton btn btn-primary">
                             Agregar Detalle
                         </button>                      
-                </div> -->
-                <!-- <div class="card-body px-0 pt-0 pb-2">
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
@@ -219,29 +217,101 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let compraDetalle of comprasDetalleCreadas ; let i = index  ">
-                                    <td class=""   class="" >{{compraDetalle.PREN_CODIGO}}</td>
-                                    <td class=""   class="" >{{compraDetalle.PREN_NOMBRE}}</td>
-                                    <td class=""   class="" >{{compraDetalle.PREN_MARCA}}</td>
-                                    <td class=""   class="" >{{compraDetalle.TALLA_NOMBRE}}</td>
-                                    <td class=""   class="" >{{compraDetalle.DET_COMPRA_CANTIDAD}}</td>
-                                    <td class=""   class="" >{{compraDetalle.DET_COMPRA_PRECIO}}</td>
+                                <tr *ngFor="let ventaDetalle of ventaDetalleCreadas ; let i = index  ">
+                                    <td class=""   class="" >{{ventaDetalle.DET_VENTA_ID}}</td>
+                                    <td class=""   class="" >{{ventaDetalle.PREN_NOMBRE}}</td>
+                                    <td class=""   class="" >{{ventaDetalle.PREN_MARCA}}</td>
+                                    <td class=""   class="" >{{ventaDetalle.TALLA_NOMBRE}}</td>
+                                    <td class=""   class="" >{{ventaDetalle.DET_VENTA_CANTIDAD}}</td>
+                                    <td class=""   class="" >{{ventaDetalle.DET_VENTA_UNITARIO}}</td>
                             </tbody>
                         </table>
                     </div>
-                </div> -->
+                </div>
             </div>
         </form>
     </div>
     <div class="row d-flex text-center justify-content-center">
         <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
-            <!-- <button  (click)="crearCompra();" [disabled]="compraForm.invalid || cargando || existsComprasDetalleCreadas" class="btn btn-primary btn-icon-split" >
+            <button  (click)="registrarVenta();" [disabled]="ventaForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
                 <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
-            </button> -->
+            </button>
         </div>
         <div class="my-2 col-sm-12 col-md-12 col-lg-3">
             <button [disabled]="cargando" (click)="d('Cross click')" class="btn btn-warning btn-icon-split">
                 <span class="text">Cancelar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #agregarDetalleModal let-d="dismiss">
+    <div class="modal-header justify-content-center">
+        <h4 class="modal-title">Agregar Detalle</h4>
+    </div>
+    <mat-progress-bar *ngIf="cargando && modalIn" mode="indeterminate" ></mat-progress-bar>
+    <ngb-alert *ngIf="mostrar_alerta && modalIn" [type]="tipo_alerta" (closed)="mostrar_alerta = false" >{{mensaje_alerta}}</ngb-alert>
+    <div class="modal-body">
+        <form [formGroup]="ventaDetalleForm">
+            <div class="form-group">
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label class="mr-sm-2" for="inputPrenda">Prenda</label>
+                        <select  formControlName="prendaDetalleId" id="inputPrenda" class="border-left-primary form-select mr-sm-2" >
+                            <option hidden value="" disabled>Escoge una opción</option>
+                            <option [value]="prendaDetalle.DET_PREN_ID" *ngFor="let prendaDetalle of prendasDetalles">{{prendaDetalle.DET_PRENDA}}</option>
+                            <div *ngIf="prendaDetalleId!.invalid && (prendaDetalleId!.dirty || prendaDetalleId!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="prendaDetalleId!.errors!.required">
+                                    * La prenda es requerida.
+                                </div>
+                            </div>
+                        </select>                        
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputPrecio">Precio</label>
+                        <div>
+                            <input type="text" formControlName="precio" id="inputPrecio" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Precio">
+                            <div *ngIf="precio!.invalid && (precio!.dirty || precio!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="precio!.errors!.required">
+                                    * El precio es requerido.
+                                </div>
+                                <div *ngIf="precio!.errors!.pattern">
+                                    * El formato es inválido.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputCantidad">Cantidad</label>
+                        <div>
+                            <input type="text" formControlName="cantidad" id="inputCantidad" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Cantidad">
+                            <div *ngIf="cantidad!.invalid && (cantidad!.dirty || cantidad!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="cantidad!.errors!.required">
+                                * La cantidad es requerida.
+                                </div>
+                                <div *ngIf="cantidad!.errors!.pattern">
+                                * El formato es inválido.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row d-flex text-center justify-content-center">
+        <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
+            <button  (click)="agregarDetalle();d('Cross click')" [disabled]="ventaDetalleForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
+                <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
+            </button>
+        </div>
+        <div class="my-2 col-sm-12 col-md-12 col-lg-3">
+            <button [disabled]="cargando" (click)="d('Cross click')" class="btn btn-warning btn-icon-split">
+                <span class="text">Cerrar&nbsp;<i class="fas fa-arrow-circle-left"></i></span>
             </button>
         </div>
     </div>

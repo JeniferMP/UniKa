@@ -14,6 +14,8 @@ import { DetallePrenda } from 'src/app/models/detallePrenda.model';
 })
 export class PrendaComponent implements OnInit {
 
+  detallesPorPrenda_iniciales:any[]=[];
+  detallesPorPrenda:any[]=[];
   prendas:any[]=[];
   prendas_iniciales: any[] = [];
   categorias_iniciales: any[]=[];
@@ -248,6 +250,8 @@ detallePrendaFrom : FormGroup = this.formBuilder.group({
   verMas(prenda:Prenda){
     this.prendaSeleccionada = prenda;
     this.mostrar_alerta = false;
+    this.listarDetallesPorPrenda(prenda.PREN_ID);
+    console.log(this.detallesPorPrenda)
     this.modal.open(this.verMasModal);
   }
 
@@ -395,6 +399,32 @@ detallePrendaFrom : FormGroup = this.formBuilder.group({
         }
       }
     )
+  }
+
+  listarDetallesPorPrenda(idPrenda:number){
+    this.cargando = true;
+    this.modalIn = false;
+    this.prendaService.listarDetallesPorPrendas(idPrenda).subscribe(
+      (data)=>{
+        this.detallesPorPrenda_iniciales = data['resultado'];
+        this.detallesPorPrenda = this.detallesPorPrenda_iniciales.slice();
+        this.cargando = false;
+      },
+      (error) =>{
+        this.cargando = false;
+        this.mostrar_alerta = true;
+        this.tipo_alerta='danger';
+        this.modalIn = false;
+        if (error['error']['error'] !== undefined) {
+          if (error['error']['error'] === 'error_deBD') {
+            this.mensaje_alerta = 'Hubo un error al intentar ejecutar su solicitud. Por favor, actualice la página.';
+          }
+        }
+        else{
+          this.mensaje_alerta = 'Hubo un error al mostrar la información de esta página. Por favor, actualice la página.';
+        }
+      }
+    ); 
   }
 
 }

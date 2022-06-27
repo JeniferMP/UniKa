@@ -240,6 +240,26 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Talla</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Stock Mínimo</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- <tr *ngFor="let compra of compras |filterUserByName:filtroTexto|slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage ; let i = index  "> -->
+                                    <tr *ngFor="let detallePorPrenda of detallesPorPrenda ; let i = index  ">
+                                        <td class=""   class="" >{{detallePorPrenda.TALLA_NOMBRE}}</td>
+                                        <td class=""   class="" >{{detallePorPrenda.DET_PREN_STOCK_MIN}}</td>
+                                        <td class=""   class="" >{{detallePorPrenda.DET_PREN_STOCK}}</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
             </div>
         </form>
         <br>
