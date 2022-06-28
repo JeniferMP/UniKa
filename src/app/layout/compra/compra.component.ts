@@ -10,7 +10,7 @@ import { Prenda } from 'src/app/models/prenda.model';
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { PrendaService } from 'src/app/services/prenda.service';
 import { DetallePrenda } from 'src/app/models/detallePrenda.model';
-
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-compra',
   templateUrl: './compra.component.html',
@@ -350,6 +350,16 @@ export class CompraComponent implements OnInit {
         }
       )
     }
+  }
+
+  exportToExcel(): void {
+    let element = document.getElementById('compras-table');
+    const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    const book: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(book, worksheet, 'Sheet1');
+
+    XLSX.writeFile(book, "Compras.xlsx");
   }
 
 }
