@@ -40,6 +40,8 @@ export class VentaComponent implements OnInit {
   prenda= new Prenda()
   totalDetalleValor: number
   totalVentaValor: number
+  cantidadMaximaStock:number
+  stockNoValido:boolean
   ventaForm : FormGroup = this.formBuilder.group({
     // numComprobante:['',Validators.pattern('[A-Za-z0-9-]+')],
     tipoComprobante:[''],
@@ -52,7 +54,8 @@ export class VentaComponent implements OnInit {
     prendaDetalleId:['',[Validators.required]],
     precio: ['',[Validators.required,Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$')]],
     cantidad: ['',[Validators.required, Validators.pattern('[0-9]*')]],
-    totalDetalle:['']
+    totalDetalle:[''],
+    cantidadMaxima:['']
   });
   constructor(
     private formBuilder: FormBuilder,
@@ -66,7 +69,6 @@ export class VentaComponent implements OnInit {
     configModal.backdrop = 'static';
     configModal.keyboard = false;
     configModal.size='lg'
-
    }
   cargando = false;
   modalIn = false;
@@ -108,6 +110,9 @@ export class VentaComponent implements OnInit {
   }
   get totalDetalle() {
     return this.ventaDetalleForm.get('totalDetalle');
+  }
+  get cantidadMaxima() {
+    return this.ventaDetalleForm.get('cantidadMaxima');
   }
 
   inicializarFormulario(){
@@ -155,6 +160,12 @@ export class VentaComponent implements OnInit {
     }
 
     agregarVenta(){
+      this.totalVentaValor=0
+      this.existsVentaDetalleCreadas=true;
+      this.clientes=[]
+      this.metodosPago=[]
+      this.prendasDetalles=[]
+      this.prendasDetalles=[]
       this.mostrar_alerta = false;
       this.inicializarFormulario();
       this.listarClientes();
@@ -250,7 +261,7 @@ export class VentaComponent implements OnInit {
     }
 
   agregarDetalleVenta(){
-    console.log(this.existsVentaDetalleCreadas)
+    this.totalDetalleValor=0
     this.mostrar_alerta = false;
     this.inicializarFormularioDetalle();
     this.listarDetallePrendas();
@@ -354,7 +365,7 @@ export class VentaComponent implements OnInit {
   }
 
   obtenerPrenda(prendaId:number){
-    console.log("Obteniendo Prenda")
+    this.cantidadMaximaStock=this.prendasDetalles.filter(item => item.DET_PREN_ID > this.prendaDetalleId!.value)[0].DET_PREN_STOCK
     this.cargando=true;
     this.mostrar_alerta=false;
     this.prendaService.obtenerPrendaporId(prendaId).subscribe(
@@ -362,7 +373,6 @@ export class VentaComponent implements OnInit {
         this.prendas_iniciales = data.resultado;
         this.prenda = this.prendas_iniciales.slice()[0];
         this.cargando = false;
-        console.log(this.ventas)
       },
       error=>{
         this.cargando = false;
@@ -380,10 +390,31 @@ export class VentaComponent implements OnInit {
     )
   }
   calcularTotalDetalle(){
+    this.validarStock();
     this.totalDetalleValor=this.cantidad!.value * this.precio!.value;
     console.log(this.totalDetalle)
   }
   calcularTotalVenta(){
    this.totalVentaValor= this.ventaDetalleCreadas.map(item => item.DET_VENTA_TOTAL).reduce((prev, curr) => prev + curr, 0);
   }
+
+  validarStock(){
+    console.log(this.stockNoValido)
+    console.log(this.cargando)
+    console.log(this.ventaDetalleForm.invalid)
+    if (this.cantidadMaximaStock<this.cantidad!.value){
+      this.stockNoValido=true
+      this.cargando = false;
+      this.modalIn = true;
+      this.mostrar_alerta = true;
+      this.tipo_alerta='danger';
+      this.mensaje_alerta = 'La cantidad a ingresar debe ser menor o igual a '+this.cantidadMaximaStock;
+    }
+    else{
+      this.modalIn = false;
+      this.mostrar_alerta = false;
+      this.stockNoValido=false
+    }
+  }
+
 }

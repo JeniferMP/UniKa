@@ -8,5 +8,6 @@ export class DetallePrenda{
     DET_PRENDA: string;
     PREN_NOMBRE: string;
     PREN_MARCA: string;
-    DET_PREN_STOCK_MIN: string;
+    DET_PREN_STOCK_MIN: number;
+    DET_PREN_STOCK:number;
 }

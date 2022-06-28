@@ -105,7 +105,7 @@
                             </div>
                         </div>
                         <div class="my-2 col-sm-12 col-md-12 col-lg-6">
-                            <label for="inputTotal">Total</label>
+                            <label for="inputTotal">Total Venta</label>
                             <div>
                                 <input type="text" disabled value="{{ventaSeleccionada.VENTA_TOTAL}}" id="inputTotal" class="border-left-primary font-tamanio form-control">
                             </div>
@@ -122,7 +122,7 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Talla</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cantidad</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Monto Unitario</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Monto Total</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Detalle</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -312,6 +312,14 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputCantidadMaxima">Cantidad Stock</label>
+                        <div>
+                            <input type="text" formControlName="cantidadMaxima" id="inputCantidadMaxima" class="border-left-primary font-tamanio form-control" [ngModel]="cantidadMaximaStock" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
                         <label for="inputCantidad">Cantidad</label>
                         <div>
                             <input type="text" formControlName="cantidad" id="inputCantidad" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Cantidad" (change)="calcularTotalDetalle()">
@@ -339,7 +347,7 @@
     </div>
     <div class="row d-flex text-center justify-content-center">
         <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
-            <button  (click)="agregarDetalle();d('Cross click');calcularTotalVenta()" [disabled]="ventaDetalleForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
+            <button  (click)="agregarDetalle();d('Cross click');calcularTotalVenta()" [disabled]="(ventaDetalleForm.invalid || cargando) || stockNoValido" class="btn btn-primary btn-icon-split" >
                 <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
             </button>
         </div>
