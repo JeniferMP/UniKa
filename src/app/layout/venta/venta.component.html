@@ -121,17 +121,19 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Marca</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Talla</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cantidad</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Monto Unitario</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Monto Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let ventaDetalle of ventasDetalle ; let i = index  ">
-                                        <td class=""   class="" >{{ventaDetalle.VENTA_ID}}</td>
-                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
-                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
-                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
-                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
-                                        <td class=""   class="" >{{ventaDetalle.CLIENTE_NOMBRES}}</td>
+                                    <tr *ngFor="let ventaDetalle of ventaDetalles ; let i = index  ">
+                                        <td class=""   class="" >{{ventaDetalle.PREN_CODIGO}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.PREN_NOMBRE}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.PREN_MARCA}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.TALLA_NOMBRE}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.DET_VENTA_CANTIDAD}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.DET_VENTA_UNITARIO}}</td>
+                                        <td class=""   class="" >{{ventaDetalle.DET_VENTA_TOTAL}}</td>
                                 </tbody>
                             </table>
                         </div>
@@ -198,6 +200,20 @@
                         </select>                        
                     </div>
                 </div>
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label class="mr-sm-2" for="inputMetodoPago">Método de Pago</label>
+                        <select  formControlName="metodoPago" id="inputMetodoPago" class="border-left-primary form-select mr-sm-2" >
+                            <option hidden value="" disabled>Escoge una opción</option>
+                            <option [value]="metodoPago.METODO_PAGO_ID" *ngFor="let metodoPago of metodosPago">{{metodoPago.METODO_PAGO_DESCRIPCION}}</option>
+                            <div *ngIf="metodoPago!.invalid && (metodoPago!.dirty || metodoPago!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
+                                <div *ngIf="metodoPago!.errors!.required">
+                                    * El método de pago es requerido.
+                                </div>
+                            </div>
+                        </select>                        
+                    </div>
+                </div>
                 <div class="py-1 col-sm-12 col-md-4 col-lg-3">
                         <button [disabled]="cargando" (click)="agregarDetalleVenta()" style="float:right" type="button" class="boton btn btn-primary">
                             Agregar Detalle
@@ -214,6 +230,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Talla</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cantidad</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Detalle Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -224,8 +241,17 @@
                                     <td class=""   class="" >{{ventaDetalle.TALLA_NOMBRE}}</td>
                                     <td class=""   class="" >{{ventaDetalle.DET_VENTA_CANTIDAD}}</td>
                                     <td class=""   class="" >{{ventaDetalle.DET_VENTA_UNITARIO}}</td>
+                                    <td class=""   class="" >{{ventaDetalle.DET_VENTA_TOTAL}}</td>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputTotalVenta">Total Venta</label>
+                        <div>
+                            <input type="text" formControlName="totalVenta" id="inputTotalVenta" class="border-left-primary font-tamanio form-control" [ngModel]="totalVentaValor" readonly>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -233,7 +259,7 @@
     </div>
     <div class="row d-flex text-center justify-content-center">
         <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
-            <button  (click)="registrarVenta();" [disabled]="ventaForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
+            <button  (click)="registrarVenta();" [disabled]="ventaForm.invalid || cargando  ||  existsVentaDetalleCreadas" class="btn btn-primary btn-icon-split" >
                 <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
             </button>
         </div>
@@ -257,7 +283,7 @@
                 <div class="row justify-content-center">
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
                         <label class="mr-sm-2" for="inputPrenda">Prenda</label>
-                        <select  formControlName="prendaDetalleId" id="inputPrenda" class="border-left-primary form-select mr-sm-2" >
+                        <select  formControlName="prendaDetalleId" id="inputPrenda" class="border-left-primary form-select mr-sm-2" (change)="obtenerPrenda(prendaDetalleId!.value);">
                             <option hidden value="" disabled>Escoge una opción</option>
                             <option [value]="prendaDetalle.DET_PREN_ID" *ngFor="let prendaDetalle of prendasDetalles">{{prendaDetalle.DET_PRENDA}}</option>
                             <div *ngIf="prendaDetalleId!.invalid && (prendaDetalleId!.dirty || prendaDetalleId!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
@@ -272,7 +298,7 @@
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
                         <label for="inputPrecio">Precio</label>
                         <div>
-                            <input type="text" formControlName="precio" id="inputPrecio" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Precio">
+                            <input type="text" formControlName="precio" id="inputPrecio" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Precio" [ngModel]="prenda.PREN_PRECIO" (change)="calcularTotalDetalle()" >
                             <div *ngIf="precio!.invalid && (precio!.dirty || precio!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
                                 <div *ngIf="precio!.errors!.required">
                                     * El precio es requerido.
@@ -288,7 +314,7 @@
                     <div class="my-2 col-sm-12 col-md-12 col-lg-6">
                         <label for="inputCantidad">Cantidad</label>
                         <div>
-                            <input type="text" formControlName="cantidad" id="inputCantidad" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Cantidad">
+                            <input type="text" formControlName="cantidad" id="inputCantidad" class="border-left-primary font-tamanio form-control" placeholder="Ingrese Cantidad" (change)="calcularTotalDetalle()">
                             <div *ngIf="cantidad!.invalid && (cantidad!.dirty || cantidad!.touched)" class="my-1" style="color: rgb(197, 68, 68);">
                                 <div *ngIf="cantidad!.errors!.required">
                                 * La cantidad es requerida.
@@ -300,12 +326,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="row justify-content-center">
+                    <div class="my-2 col-sm-12 col-md-12 col-lg-6">
+                        <label for="inputTotalDetalle">Total Detalle</label>
+                        <div>
+                            <input type="text" formControlName="totalDetalle" id="inputTotalDetalle" class="border-left-primary font-tamanio form-control" [ngModel]="totalDetalleValor" readonly>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
     <div class="row d-flex text-center justify-content-center">
         <div class="my-2 col-sm-12 col-md-12 col-lg-3 ">
-            <button  (click)="agregarDetalle();d('Cross click')" [disabled]="ventaDetalleForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
+            <button  (click)="agregarDetalle();d('Cross click');calcularTotalVenta()" [disabled]="ventaDetalleForm.invalid || cargando" class="btn btn-primary btn-icon-split" >
                 <span class="text">Registrar&nbsp;<i class="fas fa-save"></i></span>
             </button>
         </div>

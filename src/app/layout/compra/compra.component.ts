@@ -314,7 +314,7 @@ export class CompraComponent implements OnInit {
           if(data.exito){
             this.modalIn = false;
             this.closeModal();
-            this.mensaje_alerta = 'Usuario registrado con éxito.';
+            this.mensaje_alerta = 'Compra registrada con éxito.';
             this.tipo_alerta = 'success';
             this.mostrar_alerta = true;
             this.listarCompras();

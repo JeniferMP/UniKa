@@ -67,4 +67,9 @@ listarPrendasHabilitadasPorCategoria(idCat:number):Observable<any>{
     const url = environment.domain_url + '/api/detallePrenda/listarDetallePorPrenda.php?PREN_ID='+idPrenda;
     return this.http.get<any>(url).pipe(retry(2));
   }
+
+  obtenerPrendaporId(idPrenda:number):Observable<any>{
+    const url = environment.domain_url + '/api/prenda/obtenerPrendaPorId.php?PREN_ID='+idPrenda;
+    return this.http.get<any>(url).pipe(retry(2));
+  }
 }
